@@ -61,7 +61,7 @@ class TestMessageParser:
                     "value": {
                         "messages": [{
                             "id": "msg_123",
-                            "from": "5511999887766",
+                            "from": "5573982005612",
                             "timestamp": "1234567890",
                             "type": "text",
                             "text": {"body": "Hello"}
@@ -80,7 +80,7 @@ class TestMessageParser:
         assert result is not None
         assert result["type"] == "message"
         assert result["message_id"] == "msg_123"
-        assert result["from"] == "5511999887766"
+        assert result["from"] == "5573982005612"
         assert result["message_type"] == "text"
         assert result["text"] == "Hello"
         assert result["contact_name"] == "John Doe"
@@ -93,7 +93,7 @@ class TestMessageParser:
                     "value": {
                         "messages": [{
                             "id": "msg_124",
-                            "from": "5511999887766",
+                            "from": "5573982005612",
                             "timestamp": "1234567890",
                             "type": "interactive",
                             "interactive": {
@@ -131,7 +131,7 @@ class TestMessageParser:
                             "id": "msg_123",
                             "status": "delivered",
                             "timestamp": "1234567890",
-                            "recipient_id": "5511999887766"
+                            "recipient_id": "5573982005612"
                         }]
                     }
                 }]
@@ -225,7 +225,7 @@ class TestWebhookEndpoints:
     def test_verify_webhook_success(self, client):
         """Test successful webhook verification."""
         response = client.get(
-            "/webhooks/whatsapp",
+            "/webhooks",
             params={
                 "hub.mode": "subscribe",
                 "hub.challenge": "test_challenge",
@@ -240,7 +240,7 @@ class TestWebhookEndpoints:
     def test_verify_webhook_invalid_token(self, client):
         """Test webhook verification with invalid token."""
         response = client.get(
-            "/webhooks/whatsapp",
+            "/webhooks",
             params={
                 "hub.mode": "subscribe",
                 "hub.challenge": "test_challenge",
@@ -254,7 +254,7 @@ class TestWebhookEndpoints:
     def test_verify_webhook_wrong_mode(self, client):
         """Test webhook verification with wrong mode."""
         response = client.get(
-            "/webhooks/whatsapp",
+            "/webhooks",
             params={
                 "hub.mode": "unsubscribe",
                 "hub.challenge": "test_challenge",
@@ -274,7 +274,7 @@ class TestWebhookEndpoints:
                     "value": {
                         "messages": [{
                             "id": "msg_123",
-                            "from": "5511999887766",
+                            "from": "5573982005612",
                             "type": "text",
                             "text": {"body": "Hello"}
                         }],
@@ -285,7 +285,7 @@ class TestWebhookEndpoints:
         }
         
         response = client.post(
-            "/webhooks/whatsapp",
+            "/webhooks",
             json=webhook_payload
         )
         
@@ -303,7 +303,7 @@ class TestWebhookEndpoints:
                     "value": {
                         "messages": [{
                             "id": "msg_123",
-                            "from": "5511999887766",
+                            "from": "5573982005612",
                             "type": "text",
                             "text": {"body": "Hello"}
                         }],
@@ -321,7 +321,7 @@ class TestWebhookEndpoints:
         ).hexdigest()
         
         response = client.post(
-            "/webhooks/whatsapp",
+            "/webhooks",
             json=webhook_payload,
             headers={"X-Hub-Signature-256": f"sha256={signature}"}
         )
@@ -339,7 +339,7 @@ class TestWebhookEndpoints:
                     "value": {
                         "messages": [{
                             "id": "msg_123",
-                            "from": "5511999887766",
+                            "from": "5573982005612",
                             "type": "text",
                             "text": {"body": "Hello"}
                         }]
@@ -349,7 +349,7 @@ class TestWebhookEndpoints:
         }
         
         response = client.post(
-            "/webhooks/whatsapp",
+            "/webhooks",
             json=webhook_payload,
             headers={"X-Hub-Signature-256": "sha256=invalid_signature"}
         )
@@ -359,7 +359,7 @@ class TestWebhookEndpoints:
     def test_receive_webhook_invalid_json(self, client):
         """Test receiving webhook with invalid JSON."""
         response = client.post(
-            "/webhooks/whatsapp",
+            "/webhooks",
             data="invalid json",
             headers={"Content-Type": "application/json"}
         )
@@ -384,7 +384,7 @@ class TestWebhookEndpoints:
         }
         
         response = client.post(
-            "/webhooks/whatsapp",
+            "/webhooks",
             json=webhook_payload
         )
         
@@ -397,7 +397,7 @@ class TestWebhookEndpoints:
         webhook_payload = {"entry": []}
         
         response = client.post(
-            "/webhooks/whatsapp",
+            "/webhooks",
             json=webhook_payload
         )
         

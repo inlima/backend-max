@@ -29,7 +29,7 @@ class TestConversationEdgeCases:
             self.flow_engine = FlowEngine(state_manager=self.mock_state_manager)
         
         self.session_id = uuid.uuid4()
-        self.phone_number = "5511999999999"
+        self.phone_number = "5573982005612"
         self.mock_session = MagicMock(spec=UserSession)
         self.mock_session.id = self.session_id
         self.mock_session.phone_number = self.phone_number
@@ -212,7 +212,7 @@ class TestUserInputVariations:
             self.flow_engine = FlowEngine(state_manager=self.mock_state_manager)
         
         self.session_id = uuid.uuid4()
-        self.phone_number = "5511999999999"
+        self.phone_number = "5573982005612"
         self.mock_session = MagicMock(spec=UserSession)
         self.mock_session.id = self.session_id
         self.mock_session.phone_number = self.phone_number
@@ -326,7 +326,7 @@ class TestFlowStateConsistency:
             self.flow_engine = FlowEngine(state_manager=self.mock_state_manager)
         
         self.session_id = uuid.uuid4()
-        self.phone_number = "5511999999999"
+        self.phone_number = "5573982005612"
         self.mock_session = MagicMock(spec=UserSession)
         self.mock_session.id = self.session_id
         self.mock_session.phone_number = self.phone_number
@@ -418,7 +418,7 @@ class TestErrorRecoveryScenarios:
             self.flow_engine = FlowEngine(state_manager=self.mock_state_manager)
         
         self.session_id = uuid.uuid4()
-        self.phone_number = "5511999999999"
+        self.phone_number = "5573982005612"
         self.mock_session = MagicMock(spec=UserSession)
         self.mock_session.id = self.session_id
         self.mock_session.phone_number = self.phone_number

@@ -1,64 +1,122 @@
-# Advocacia Direta WhatsApp Bot
+# Advocacia Direta WhatsApp Bot - MVP
 
-A WhatsApp chatbot for law firm client intake automation using the WhatsApp Business Platform API.
+Um chatbot WhatsApp para automação de atendimento inicial em escritórios de advocacia usando a API oficial do WhatsApp Business Platform.
 
-## Features
+## Sobre o MVP
 
-- Automated client intake and qualification
-- 24/7 availability via WhatsApp
-- Structured conversation flows
-- Seamless handoff to human agents
-- Analytics and performance tracking
-- LGPD compliant data handling
+Esta é a versão MVP (Minimum Viable Product) focada nas funcionalidades essenciais para validar a proposta de valor:
 
-## Setup
+### Funcionalidades Incluídas no MVP
+- ✅ Atendimento automatizado básico via WhatsApp
+- ✅ Identificação de cliente (novo/antigo)
+- ✅ Seleção de área de atuação
+- ✅ Solicitação de agendamento (presencial/online)
+- ✅ Transferência simples para atendimento humano
+- ✅ Gerenciamento de estado em memória
+- ✅ Deploy básico com Docker
 
-1. Install dependencies:
+### Funcionalidades para Versões Futuras
+- 📊 Analytics avançados e métricas detalhadas
+- 🔒 Segurança avançada e compliance LGPD completo
+- 💾 Persistência em banco de dados
+- 🔄 Tratamento de erro robusto com retry
+- 📈 Monitoramento de produção (Prometheus/Grafana)
+- 🧪 Suite de testes abrangente
+- 💬 Templates de mensagem avançados
+
+## Setup Rápido
+
+1. **Instalar dependências:**
 ```bash
-poetry install
+pip install fastapi uvicorn python-dotenv requests
 ```
 
-2. Copy environment configuration:
+2. **Configurar ambiente:**
 ```bash
 cp .env.example .env
+# Edite o .env com suas credenciais do WhatsApp Business API
 ```
 
-3. Configure your environment variables in `.env`
-
-4. Run database migrations:
+3. **Executar aplicação:**
 ```bash
-poetry run alembic upgrade head
+uvicorn app.main:app --reload
 ```
 
-5. Start the development server:
-```bash
-poetry run uvicorn app.main:app --reload
-```
-
-## Project Structure
+## Estrutura do Projeto (MVP)
 
 ```
 app/
-├── __init__.py
-├── main.py              # FastAPI application entry point
-├── config.py            # Configuration and settings
-├── models/              # SQLAlchemy database models
-├── services/            # Business logic services
-├── api/                 # API endpoints and webhooks
-├── core/                # Core utilities and dependencies
-└── templates/           # Message templates
-tests/                   # Test suite
-alembic/                 # Database migrations
+├── main.py              # Aplicação FastAPI principal
+├── api/
+│   └── webhooks.py      # Webhook do WhatsApp
+├── services/
+│   ├── whatsapp.py      # Cliente WhatsApp simples
+│   ├── conversation.py  # Lógica de conversa
+│   └── state.py         # Gerenciamento de estado em memória
+└── templates/
+    └── messages.py      # Templates de mensagem
 ```
 
-## Development
+## Configuração Mínima
 
-- Run tests: `poetry run pytest`
-- Format code: `poetry run black app tests`
-- Sort imports: `poetry run isort app tests`
-- Type checking: `poetry run mypy app`
-- Linting: `poetry run flake8 app tests`
+### Variáveis de Ambiente Obrigatórias
 
-## Environment Variables
+```bash
+# WhatsApp Business API
+WHATSAPP_ACCESS_TOKEN=seu_token_aqui
+WHATSAPP_PHONE_NUMBER_ID=seu_phone_id_aqui
+WHATSAPP_WEBHOOK_VERIFY_TOKEN=seu_verify_token_aqui
 
-See `.env.example` for required configuration variables.
+# Configuração básica
+ENVIRONMENT=development
+LOG_LEVEL=INFO
+```
+
+## Deploy Simples
+
+1. **Build da imagem:**
+```bash
+docker build -t advocacia-whatsapp-mvp .
+```
+
+2. **Executar container:**
+```bash
+docker run -p 8000:8000 --env-file .env advocacia-whatsapp-mvp
+```
+
+3. **Verificar saúde:**
+```bash
+curl http://localhost:8000/health
+```
+
+## Desenvolvimento
+
+### Executar localmente:
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+### Testar webhook:
+```bash
+curl -X POST http://localhost:8000/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"entry": [{"changes": [{"value": {"messages": [{"from": "5511999999999", "text": {"body": "oi"}}]}}]}]}'
+```
+
+## Próximos Passos
+
+Após validar o MVP, as próximas funcionalidades a implementar são:
+
+1. **Persistência de dados** - Migrar para PostgreSQL
+2. **Analytics básicos** - Métricas de conversão
+3. **Tratamento de erro** - Retry e fallbacks
+4. **Testes automatizados** - Cobertura básica
+5. **Monitoramento** - Logs estruturados
+6. **Segurança** - Rate limiting e validação
+
+## Suporte
+
+Para dúvidas sobre o MVP:
+1. Verifique os logs da aplicação
+2. Teste o endpoint `/health`
+3. Valide as credenciais do WhatsApp Business API

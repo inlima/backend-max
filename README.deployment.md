@@ -1,234 +1,265 @@
-# Deployment Guide - Advocacia Direta WhatsApp Bot
+# Guia de Deploy - MVP Advocacia Direta WhatsApp Bot
 
-## Overview
+## Visão Geral
 
-This guide covers the production deployment of the Advocacia Direta WhatsApp Bot using Docker containers with comprehensive monitoring and logging.
+Este guia cobre o deploy simplificado do MVP do Advocacia Direta WhatsApp Bot usando Docker.
 
-## Prerequisites
+**IMPORTANTE:** Esta é a versão MVP focada em simplicidade e validação rápida. Funcionalidades avançadas como monitoramento completo, backup automático e alta disponibilidade serão implementadas em versões futuras.
 
-- Docker and Docker Compose installed
-- SSL certificates for HTTPS
-- WhatsApp Business API credentials
-- Production database credentials
+## Pré-requisitos
 
-## Quick Start
+- Docker instalado
+- Credenciais da WhatsApp Business API
+- Domínio com HTTPS (para webhook em produção)
 
-1. **Clone and setup environment:**
+## Deploy Rápido
+
+### 1. Preparar Ambiente
+
 ```bash
+# Clonar repositório
 git clone <repository-url>
 cd advocacia-direta-whatsapp
-cp .env.prod .env
-# Edit .env with your production values
+
+# Configurar variáveis de ambiente
+cp .env.example .env
+# Editar .env com suas credenciais
 ```
 
-2. **Deploy to production:**
+### 2. Build e Deploy
+
 ```bash
-./scripts/deploy.sh production
+# Build da imagem
+docker build -t advocacia-whatsapp-mvp .
+
+# Executar container
+docker run -d \
+  --name advocacia-whatsapp \
+  -p 8000:8000 \
+  --env-file .env \
+  --restart unless-stopped \
+  advocacia-whatsapp-mvp
 ```
 
-3. **Verify deployment:**
+### 3. Verificar Deploy
+
 ```bash
+# Verificar saúde da aplicação
 curl -f http://localhost:8000/health
+
+# Verificar logs
+docker logs advocacia-whatsapp
 ```
 
-## Environment Configuration
+## Configuração de Ambiente
 
-### Required Environment Variables
+### Variáveis Obrigatórias
 
-Copy `.env.prod` to `.env` and configure:
-
-- `POSTGRES_PASSWORD`: Strong database password
-- `REDIS_PASSWORD`: Redis authentication password
-- `SECRET_KEY`: Random 32+ character string for JWT signing
-- `WHATSAPP_ACCESS_TOKEN`: WhatsApp Business API token
-- `WHATSAPP_PHONE_NUMBER_ID`: Your WhatsApp phone number ID
-- `WHATSAPP_WEBHOOK_VERIFY_TOKEN`: Webhook verification token
-
-### SSL Configuration
-
-Place your SSL certificates in `nginx/ssl/`:
-- `cert.pem`: SSL certificate
-- `key.pem`: Private key
-
-## Deployment Scripts
-
-### Deploy Script
-```bash
-./scripts/deploy.sh [environment]
-```
-- Creates database backup (production only)
-- Builds and deploys containers
-- Runs database migrations
-- Performs health checks
-
-### Backup Script
-```bash
-./scripts/backup.sh [environment]
-```
-- Backs up PostgreSQL database
-- Backs up Redis data
-- Backs up application logs
-- Compresses and stores backups
-
-### Rollback Script
-```bash
-./scripts/rollback.sh [environment] [backup_file]
-```
-- Restores from specified backup
-- Creates pre-rollback backup
-- Restarts services
-
-## Monitoring Stack
-
-Deploy monitoring tools alongside the application:
+Edite o arquivo `.env` com as seguintes variáveis:
 
 ```bash
-docker-compose -f docker-compose.prod.yml -f docker-compose.monitoring.yml up -d
+# WhatsApp Business API (OBRIGATÓRIO)
+WHATSAPP_ACCESS_TOKEN=seu_token_da_meta
+WHATSAPP_PHONE_NUMBER_ID=seu_phone_number_id
+WHATSAPP_WEBHOOK_VERIFY_TOKEN=token_de_verificacao_personalizado
+
+# Configuração da aplicação
+ENVIRONMENT=production
+LOG_LEVEL=INFO
+HOST=0.0.0.0
+PORT=8000
+
+# Configuração do webhook (para produção)
+WEBHOOK_URL=https://seudominio.com/webhook
 ```
 
-### Monitoring Services
+### Como Obter Credenciais do WhatsApp
 
-- **Prometheus** (port 9090): Metrics collection
-- **Grafana** (port 3000): Dashboards and visualization
-- **Loki** (port 3100): Log aggregation
-- **Node Exporter** (port 9100): System metrics
-- **Redis Exporter** (port 9121): Redis metrics
-- **Postgres Exporter** (port 9187): Database metrics
+1. **Acesse o Meta for Developers:**
+   - Vá para https://developers.facebook.com/
+   - Crie uma conta/faça login
 
-### Default Credentials
+2. **Criar App WhatsApp Business:**
+   - Crie um novo app
+   - Adicione o produto "WhatsApp Business Platform"
 
-- Grafana: admin/admin (change on first login)
+3. **Configurar Webhook:**
+   - URL do Webhook: `https://seudominio.com/webhook`
+   - Verify Token: use o mesmo valor de `WHATSAPP_WEBHOOK_VERIFY_TOKEN`
+   - Campos: `messages`
 
-## Health Checks
+4. **Obter Credenciais:**
+   - `WHATSAPP_ACCESS_TOKEN`: Token temporário (24h) ou permanente
+   - `WHATSAPP_PHONE_NUMBER_ID`: ID do número de teste
 
-The application provides several health check endpoints:
+## Deploy com Docker Compose (Recomendado)
 
-- `GET /health`: Basic health check
-- `GET /health/ready`: Comprehensive readiness check
-- `GET /health/metrics`: Performance metrics
-- `GET /health/csat`: Customer satisfaction metrics
+Crie um arquivo `docker-compose.yml` simples:
 
-## Security Features
+```yaml
+version: '3.8'
 
-### Network Security
-- Nginx reverse proxy with rate limiting
-- HTTPS enforcement with modern TLS
-- Security headers (HSTS, X-Frame-Options, etc.)
-
-### Application Security
-- Non-root container execution
-- Secrets management via Docker secrets or environment variables
-- Input validation and sanitization
-- CORS configuration
-
-### Rate Limiting
-- API endpoints: 10 requests/second
-- WhatsApp webhooks: 100 requests/second
-- Configurable burst limits
-
-## Database Management
-
-### Migrations
-```bash
-# Run migrations
-docker-compose -f docker-compose.prod.yml exec app alembic upgrade head
-
-# Create new migration
-docker-compose -f docker-compose.prod.yml exec app alembic revision --autogenerate -m "description"
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 ```
 
-### Backup and Restore
+Deploy:
 ```bash
-# Manual backup
-docker-compose -f docker-compose.prod.yml exec -T db pg_dump -U user dbname > backup.sql
+docker-compose up -d
+```
 
-# Manual restore
-cat backup.sql | docker-compose -f docker-compose.prod.yml exec -T db psql -U user -d dbname
+## Configuração de Produção
+
+### 1. Proxy Reverso (Nginx)
+
+Para produção, use um proxy reverso para HTTPS:
+
+```nginx
+server {
+    listen 80;
+    server_name seudominio.com;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name seudominio.com;
+    
+    ssl_certificate /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.pem;
+    
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+### 2. Configurar Webhook no Meta
+
+1. Acesse o painel do Meta for Developers
+2. Vá para WhatsApp > Configuration
+3. Configure o webhook:
+   - URL: `https://seudominio.com/webhook`
+   - Verify Token: valor do seu `.env`
+   - Subscreva aos campos: `messages`
+
+## Monitoramento Básico
+
+### Health Check
+
+A aplicação fornece um endpoint básico de saúde:
+
+```bash
+# Verificar se está funcionando
+curl http://localhost:8000/health
+
+# Resposta esperada:
+{"status": "healthy", "timestamp": "2024-01-01T12:00:00Z"}
+```
+
+### Logs
+
+```bash
+# Ver logs em tempo real
+docker logs -f advocacia-whatsapp
+
+# Ver logs das últimas 100 linhas
+docker logs --tail 100 advocacia-whatsapp
 ```
 
 ## Troubleshooting
 
-### Common Issues
+### Problemas Comuns
 
-1. **Application won't start:**
-   - Check environment variables in `.env`
-   - Verify database connectivity
-   - Check logs: `docker-compose logs app`
+1. **Aplicação não inicia:**
+   ```bash
+   # Verificar logs
+   docker logs advocacia-whatsapp
+   
+   # Verificar variáveis de ambiente
+   docker exec advocacia-whatsapp env | grep WHATSAPP
+   ```
 
-2. **WhatsApp webhook failures:**
-   - Verify webhook URL is accessible from internet
-   - Check WHATSAPP_WEBHOOK_VERIFY_TOKEN
-   - Review nginx logs: `docker-compose logs nginx`
+2. **Webhook não funciona:**
+   - Verificar se a URL está acessível externamente
+   - Confirmar HTTPS em produção
+   - Validar `WHATSAPP_WEBHOOK_VERIFY_TOKEN`
 
-3. **Database connection issues:**
-   - Verify POSTGRES_PASSWORD
-   - Check database container: `docker-compose logs db`
-   - Ensure database is ready before app starts
+3. **Mensagens não são enviadas:**
+   - Verificar `WHATSAPP_ACCESS_TOKEN` válido
+   - Confirmar `WHATSAPP_PHONE_NUMBER_ID` correto
+   - Verificar logs para erros da API
 
-### Log Locations
+### Comandos Úteis
 
-- Application logs: `./logs/app.log`
-- Error logs: `./logs/error.log`
-- WhatsApp logs: `./logs/whatsapp.log`
-- Nginx logs: `./logs/nginx/`
-
-### Performance Tuning
-
-1. **Database:**
-   - Adjust `DATABASE_POOL_SIZE` based on load
-   - Monitor connection pool usage
-   - Consider read replicas for high traffic
-
-2. **Application:**
-   - Scale with `WORKER_PROCESSES`
-   - Adjust `MAX_CONNECTIONS`
-   - Monitor memory usage
-
-3. **Redis:**
-   - Configure appropriate `REDIS_POOL_SIZE`
-   - Monitor memory usage
-   - Consider Redis clustering for high availability
-
-## Maintenance
-
-### Regular Tasks
-
-1. **Daily:**
-   - Monitor application health
-   - Check error logs
-   - Verify backup completion
-
-2. **Weekly:**
-   - Review performance metrics
-   - Update dependencies (staging first)
-   - Clean old Docker images
-
-3. **Monthly:**
-   - Security updates
-   - Certificate renewal
-   - Capacity planning review
-
-### Updates
-
-1. **Test in staging:**
 ```bash
-./scripts/deploy.sh staging
+# Reiniciar aplicação
+docker restart advocacia-whatsapp
+
+# Ver uso de recursos
+docker stats advocacia-whatsapp
+
+# Executar comando dentro do container
+docker exec -it advocacia-whatsapp /bin/bash
+
+# Atualizar aplicação
+docker pull advocacia-whatsapp-mvp:latest
+docker stop advocacia-whatsapp
+docker rm advocacia-whatsapp
+# Executar novamente o comando docker run
 ```
 
-2. **Deploy to production:**
-```bash
-./scripts/deploy.sh production
-```
+## Limitações do MVP
 
-3. **Rollback if needed:**
-```bash
-./scripts/rollback.sh production
-```
+### O que NÃO está incluído nesta versão:
 
-## Support
+- ❌ Banco de dados persistente (dados em memória)
+- ❌ Backup automático
+- ❌ Monitoramento avançado (Prometheus/Grafana)
+- ❌ Alta disponibilidade
+- ❌ Rate limiting avançado
+- ❌ Logs estruturados
+- ❌ Métricas detalhadas
+- ❌ Alertas automáticos
 
-For issues and support:
-1. Check application logs
-2. Review monitoring dashboards
-3. Consult this deployment guide
-4. Contact development team with specific error messages and logs
+### Próximas Versões
+
+Após validar o MVP, implementaremos:
+
+1. **v2.0:** Persistência com PostgreSQL
+2. **v2.1:** Monitoramento com Prometheus
+3. **v2.2:** Backup automático
+4. **v2.3:** Alta disponibilidade
+5. **v3.0:** Analytics avançados
+
+## Suporte
+
+Para problemas com o MVP:
+
+1. **Verificar logs:** `docker logs advocacia-whatsapp`
+2. **Testar health check:** `curl http://localhost:8000/health`
+3. **Validar configuração:** Verificar variáveis de ambiente
+4. **Consultar documentação:** WhatsApp Business Platform API
+
+### Contato
+
+Para suporte técnico, forneça:
+- Logs da aplicação
+- Configuração (sem credenciais)
+- Descrição do problema
+- Passos para reproduzir

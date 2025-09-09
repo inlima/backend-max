@@ -35,7 +35,7 @@ class TestErrorHandler:
         return ErrorContext(
             user_id="test_user",
             session_id="test_session",
-            phone_number="5511999999999",
+            phone_number="5573982005612",
             current_step="welcome",
             message_content="test message"
         )
@@ -337,7 +337,7 @@ class TestErrorHandler:
     
     def test_is_rate_limited(self, error_handler):
         """Test rate limiting check."""
-        phone_number = "5511999999999"
+        phone_number = "5573982005612"
         
         # Initially not rate limited
         assert not error_handler.is_rate_limited(phone_number)
@@ -423,11 +423,11 @@ class TestErrorContext:
         """Test ErrorContext creation and defaults."""
         context = ErrorContext(
             user_id="test_user",
-            phone_number="5511999999999"
+            phone_number="5573982005612"
         )
         
         assert context.user_id == "test_user"
-        assert context.phone_number == "5511999999999"
+        assert context.phone_number == "5573982005612"
         assert context.timestamp is not None
         assert isinstance(context.timestamp, datetime)
     
@@ -458,7 +458,7 @@ async def test_error_handler_integration():
     context = ErrorContext(
         user_id="integration_test",
         session_id="test_session",
-        phone_number="5511999999999",
+        phone_number="5573982005612",
         current_step="practice_area"
     )
     

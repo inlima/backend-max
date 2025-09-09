@@ -117,13 +117,13 @@ class TestWhatsAppBusinessClient:
     def test_format_phone_number(self, client):
         """Test phone number formatting."""
         # Test Brazilian number without country code
-        assert client._format_phone_number("11999887766") == "5511999887766"
+        assert client._format_phone_number("73982005612") == "5573982005612"
         
         # Test number with country code
-        assert client._format_phone_number("5511999887766") == "5511999887766"
+        assert client._format_phone_number("5573982005612") == "5573982005612"
         
         # Test number with formatting characters
-        assert client._format_phone_number("+55 (11) 99988-7766") == "5511999887766"
+        assert client._format_phone_number("+55 (73) 98200-5612") == "5573982005612"
     
     @pytest.mark.asyncio
     async def test_send_message_success(self, client):
@@ -137,7 +137,7 @@ class TestWhatsAppBusinessClient:
                 return_value=mock_response
             )
             
-            result = await client.send_message("11999887766", "Test message")
+            result = await client.send_message("73982005612", "Test message")
             
             assert result is True
             mock_client.return_value.__aenter__.return_value.post.assert_called_once()
@@ -154,7 +154,7 @@ class TestWhatsAppBusinessClient:
                 return_value=mock_response
             )
             
-            result = await client.send_message("11999887766", "Test message")
+            result = await client.send_message("73982005612", "Test message")
             
             assert result is False
     
@@ -166,7 +166,7 @@ class TestWhatsAppBusinessClient:
                 side_effect=httpx.RequestError("Connection failed")
             )
             
-            result = await client.send_message("11999887766", "Test message")
+            result = await client.send_message("73982005612", "Test message")
             
             assert result is False
     
@@ -188,7 +188,7 @@ class TestWhatsAppBusinessClient:
                 return_value=mock_response
             )
             
-            result = await client.send_interactive_message("11999887766", interactive_message)
+            result = await client.send_interactive_message("73982005612", interactive_message)
             
             assert result is True
             mock_client.return_value.__aenter__.return_value.post.assert_called_once()
@@ -210,7 +210,7 @@ class TestWhatsAppBusinessClient:
                 return_value=mock_response
             )
             
-            result = await client.send_interactive_message("11999887766", interactive_message)
+            result = await client.send_interactive_message("73982005612", interactive_message)
             
             assert result is False
     

@@ -87,7 +87,7 @@ class TestTimeoutService:
         # Recent activity, in middle of flow
         session = MockSession(
             "12345678-1234-5678-9012-123456789012",
-            "5511999999999",
+            "5573982005612",
             "practice_area",
             datetime.utcnow() - timedelta(minutes=5)
         )
@@ -100,7 +100,7 @@ class TestTimeoutService:
         # Longer inactivity, in middle of flow
         session = MockSession(
             "12345678-1234-5678-9012-123456789012",
-            "5511999999999",
+            "5573982005612",
             "practice_area",
             datetime.utcnow() - timedelta(minutes=20)
         )
@@ -113,7 +113,7 @@ class TestTimeoutService:
         # Very long inactivity
         session = MockSession(
             "12345678-1234-5678-9012-123456789012",
-            "5511999999999",
+            "5573982005612",
             "completed",
             datetime.utcnow() - timedelta(minutes=35)
         )
@@ -125,7 +125,7 @@ class TestTimeoutService:
         """Test inactive minutes calculation."""
         session = MockSession(
             "12345678-1234-5678-9012-123456789012",
-            "5511999999999",
+            "5573982005612",
             updated_at=datetime.utcnow() - timedelta(minutes=15, seconds=30)
         )
         
@@ -135,7 +135,7 @@ class TestTimeoutService:
     @pytest.mark.asyncio
     async def test_attempt_reengagement_success(self, timeout_service, mock_whatsapp_client):
         """Test successful re-engagement attempt."""
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612")
         
         await timeout_service._attempt_reengagement(session, TimeoutType.INACTIVITY, 1)
         
@@ -155,7 +155,7 @@ class TestTimeoutService:
     @pytest.mark.asyncio
     async def test_attempt_reengagement_failure(self, timeout_service, mock_whatsapp_client):
         """Test failed re-engagement attempt."""
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612")
         
         # Mock send_message to fail
         mock_whatsapp_client.send_message.return_value = False
@@ -169,7 +169,7 @@ class TestTimeoutService:
     
     def test_create_reengagement_message_types(self, timeout_service, mock_message_builder):
         """Test different re-engagement message types."""
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999", "practice_area")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612", "practice_area")
         
         # Test inactivity message
         msg1 = timeout_service._create_reengagement_message(session, TimeoutType.INACTIVITY, 1)
@@ -190,7 +190,7 @@ class TestTimeoutService:
     @pytest.mark.asyncio
     async def test_escalate_timeout_to_human(self, timeout_service, mock_state_manager, mock_whatsapp_client):
         """Test escalation to human agent."""
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612")
         
         await timeout_service._escalate_timeout_to_human(session, TimeoutType.INACTIVITY)
         
@@ -206,7 +206,7 @@ class TestTimeoutService:
     @pytest.mark.asyncio
     async def test_auto_reset_session(self, timeout_service, mock_state_manager, mock_whatsapp_client):
         """Test automatic session reset."""
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612")
         session_id = str(session.id)
         
         # Add some re-engagement attempts
@@ -228,7 +228,7 @@ class TestTimeoutService:
     @pytest.mark.asyncio
     async def test_deactivate_session(self, timeout_service, mock_state_manager):
         """Test session deactivation."""
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612")
         session_id = str(session.id)
         
         # Add some re-engagement attempts
@@ -277,7 +277,7 @@ class TestTimeoutService:
         
         # Mock session that has timed out
         timed_out_session = MockSession(
-            session_id, "5511999999999", "practice_area",
+            session_id, "5573982005612", "practice_area",
             datetime.utcnow() - timedelta(minutes=20)
         )
         mock_state_manager.get_session.return_value = timed_out_session
@@ -292,7 +292,7 @@ class TestTimeoutService:
         
         # Mock active session
         active_session = MockSession(
-            session_id, "5511999999999", "practice_area",
+            session_id, "5573982005612", "practice_area",
             datetime.utcnow() - timedelta(minutes=5)
         )
         mock_state_manager.get_session.return_value = active_session
@@ -408,7 +408,7 @@ class TestTimeoutServiceIntegration:
         service = TimeoutService(mock_state_manager, mock_message_builder, mock_whatsapp_client)
         
         # Create test session
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999", "practice_area")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612", "practice_area")
         
         # First re-engagement attempt
         await service._attempt_reengagement(session, TimeoutType.INACTIVITY, 1)
@@ -450,7 +450,7 @@ class TestTimeoutServiceIntegration:
         service = TimeoutService(mock_state_manager, mock_message_builder, mock_whatsapp_client)
         
         # Create test session
-        session = MockSession("12345678-1234-5678-9012-123456789012", "5511999999999")
+        session = MockSession("12345678-1234-5678-9012-123456789012", "5573982005612")
         
         # Attempt re-engagement - should not raise exception
         await service._attempt_reengagement(session, TimeoutType.INACTIVITY, 1)

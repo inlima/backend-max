@@ -26,7 +26,7 @@ class TestSchedulingRequest:
         """Test SchedulingRequest creation."""
         request = SchedulingRequest(
             session_id="test-session",
-            phone_number="5511999999999",
+            phone_number="5573982005612",
             client_type="client_new",
             practice_area="area_civil",
             scheduling_type="type_presencial",
@@ -35,7 +35,7 @@ class TestSchedulingRequest:
         )
         
         assert request.session_id == "test-session"
-        assert request.phone_number == "5511999999999"
+        assert request.phone_number == "5573982005612"
         assert request.client_type == "client_new"
         assert request.practice_area == "area_civil"
         assert request.scheduling_type == "type_presencial"
@@ -47,7 +47,7 @@ class TestSchedulingRequest:
         created_at = datetime.utcnow()
         request = SchedulingRequest(
             session_id="test-session",
-            phone_number="5511999999999",
+            phone_number="5573982005612",
             client_type="client_new",
             practice_area="area_civil",
             scheduling_type="type_presencial",
@@ -59,7 +59,7 @@ class TestSchedulingRequest:
         result = request.to_dict()
         
         assert result["session_id"] == "test-session"
-        assert result["phone_number"] == "5511999999999"
+        assert result["phone_number"] == "5573982005612"
         assert result["client_type"] == "client_new"
         assert result["practice_area"] == "area_civil"
         assert result["scheduling_type"] == "type_presencial"
@@ -75,7 +75,7 @@ class TestInformationRequest:
         """Test InformationRequest creation."""
         request = InformationRequest(
             session_id="test-session",
-            phone_number="5511999999999",
+            phone_number="5573982005612",
             client_type="client_existing",
             practice_area="area_trabalhista",
             wants_scheduling=False,
@@ -83,7 +83,7 @@ class TestInformationRequest:
         )
         
         assert request.session_id == "test-session"
-        assert request.phone_number == "5511999999999"
+        assert request.phone_number == "5573982005612"
         assert request.client_type == "client_existing"
         assert request.practice_area == "area_trabalhista"
         assert request.wants_scheduling is False
@@ -94,7 +94,7 @@ class TestInformationRequest:
         created_at = datetime.utcnow()
         request = InformationRequest(
             session_id="test-session",
-            phone_number="5511999999999",
+            phone_number="5573982005612",
             client_type="client_existing",
             practice_area="area_trabalhista",
             wants_scheduling=False,
@@ -162,7 +162,7 @@ class TestSchedulingService:
         # Create mock session
         self.mock_session = MagicMock(spec=UserSession)
         self.mock_session.id = uuid.uuid4()
-        self.mock_session.phone_number = "5511999999999"
+        self.mock_session.phone_number = "5573982005612"
         self.mock_session.created_at = datetime.utcnow()
         self.mock_session.updated_at = datetime.utcnow()
         
@@ -426,7 +426,7 @@ class TestSchedulingService:
     def test_validate_phone_number_valid(self):
         """Test phone number validation with valid numbers."""
         valid_numbers = [
-            "5511999999999",
+            "5573982005612",
             "11999999999",
             "(11) 99999-9999",
             "+55 11 99999-9999"

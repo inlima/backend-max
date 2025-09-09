@@ -1,5 +1,5 @@
 """
-Application configuration and settings.
+Application configuration and settings - MVP Version.
 """
 
 from typing import List
@@ -7,43 +7,41 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    """Application settings."""
+    """Application settings for MVP."""
     
     # Application
-    APP_NAME: str = "Advocacia Direta WhatsApp Bot"
+    APP_NAME: str = "Advocacia Direta WhatsApp Bot - MVP"
     DEBUG: bool = False
-    ALLOWED_HOSTS: List[str] = ["*"]
+    ENVIRONMENT: str = "development"
     
-    # Database
-    DATABASE_URL: str = "postgresql+asyncpg://user:password@localhost/advocacia_direta"
-    
-    # Redis
-    REDIS_URL: str = "redis://localhost:6379/0"
-    
-    # WhatsApp Business API
-    WHATSAPP_API_URL: str = "https://graph.facebook.com/v18.0"
+    # WhatsApp Business API (Required)
+    WHATSAPP_API_URL: str = "https://graph.facebook.com/v22.0"
     WHATSAPP_ACCESS_TOKEN: str = ""
     WHATSAPP_PHONE_NUMBER_ID: str = ""
     WHATSAPP_WEBHOOK_VERIFY_TOKEN: str = ""
+
+    # Database (Optional)
+    DATABASE_URL: str = ""
+    
+    # Server Configuration
+    HOST: str = "0.0.0.0"
+    PORT: int = 8000
+    ALLOWED_HOSTS: List[str] = ["*"]
+    
+    # Session Management (In-Memory for MVP)
+    SESSION_TIMEOUT_MINUTES: int = 10
+    
+    # Logging
+    LOG_LEVEL: str = "INFO"
     
     # Security
-    SECRET_KEY: str = "your-secret-key-here"
-    ENCRYPTION_KEY: str = ""  # Base64 encoded Fernet key for data encryption
-    
-    # LGPD Compliance
-    DATA_RETENTION_DAYS: int = 90  # Days to retain user data
-    DATA_ANONYMIZATION_DAYS: int = 30  # Days before anonymizing data
-    
-    # Session Management
-    SESSION_TIMEOUT_MINUTES: int = 30
-    REENGAGEMENT_TIMEOUT_MINUTES: int = 10
-    
-    # Analytics
-    ANALYTICS_ENABLED: bool = True
+    SECRET_KEY: str = "your-secret-key-change-in-production-please"
     
     class Config:
         env_file = ".env"
         case_sensitive = True
+        # Allow extra fields for backward compatibility
+        extra = "ignore"
 
 
 settings = Settings()

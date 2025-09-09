@@ -127,7 +127,7 @@ class TestPerformanceBaseline:
         # Setup mock session
         self.mock_session = MagicMock()
         self.mock_session.id = uuid.uuid4()
-        self.mock_session.phone_number = "5511999999999"
+        self.mock_session.phone_number = "5573982005612"
         self.mock_session.current_step = "welcome"
         
         self.mock_state_manager.get_or_create_session.return_value = self.mock_session
@@ -141,7 +141,7 @@ class TestPerformanceBaseline:
         start_time = time.time()
         response = await self.flow_engine.process_message(
             user_id=str(uuid.uuid4()),
-            phone_number="5511999999999",
+            phone_number="5573982005612",
             message=message
         )
         end_time = time.time()
@@ -193,7 +193,7 @@ class TestPerformanceBaseline:
         for message in messages:
             await self.flow_engine.process_message(
                 user_id=str(uuid.uuid4()),
-                phone_number="5511999999999",
+                phone_number="5573982005612",
                 message=message
             )
         
@@ -330,7 +330,7 @@ class TestConcurrentLoad:
         # Setup single user session
         mock_session = MagicMock()
         mock_session.id = uuid.uuid4()
-        mock_session.phone_number = "5511999999999"
+        mock_session.phone_number = "5573982005612"
         mock_session.current_step = "welcome"
         
         self.mock_state_manager.get_or_create_session.return_value = mock_session
@@ -343,7 +343,7 @@ class TestConcurrentLoad:
                 message = {"type": "text", "text": {"body": f"Message {i}"}}
                 response = await self.flow_engine.process_message(
                     user_id="high_volume_user",
-                    phone_number="5511999999999",
+                    phone_number="5573982005612",
                     message=message
                 )
                 
@@ -414,7 +414,7 @@ class TestDatabasePerformance:
             
             await self.flow_engine.process_message(
                 user_id=f"db_user_{i}",
-                phone_number="5511999999999",
+                phone_number="5573982005612",
                 message=message
             )
         
@@ -447,7 +447,7 @@ class TestDatabasePerformance:
             start_time = time.time()
             await self.flow_engine.process_message(
                 user_id=f"concurrent_user_{op_id}",
-                phone_number="5511999999999",
+                phone_number="5573982005612",
                 message=message
             )
             end_time = time.time()
@@ -515,7 +515,7 @@ class TestSystemResourceUsage:
             message = {"type": "text", "text": {"body": f"Load test {i}"}}
             await self.flow_engine.process_message(
                 user_id=f"load_user_{i}",
-                phone_number="5511999999999",
+                phone_number="5573982005612",
                 message=message
             )
             
