@@ -24,6 +24,36 @@ export interface Contato {
   atendente?: string
 }
 
+// Enhanced Contato type for new features
+export interface ContatoEnhanced extends Contato {
+  endereco?: EnderecoCompleto
+  tags: string[]
+  favorito: boolean
+  fonte: string
+  valorPotencial?: number
+  probabilidadeConversao?: number
+  ultimaInteracaoDetalhes: {
+    tipo: string
+    canal: string
+    assunto: string
+  }
+  metricas: {
+    totalInteracoes: number
+    tempoMedioResposta: number
+    satisfacao?: number
+  }
+}
+
+export interface EnderecoCompleto {
+  cep: string
+  logradouro: string
+  numero: string
+  complemento?: string
+  bairro: string
+  cidade: string
+  estado: string
+}
+
 export interface ConversaMessage {
   id: string
   contatoId: string
@@ -57,6 +87,67 @@ export interface Processo {
   observacoes?: string
 }
 
+// Enhanced Processo type for new features
+export interface ProcessoEnhanced extends Processo {
+  cliente: ContatoBasico
+  valor?: ProcessoValor
+  prazos: ProcessoPrazo[]
+  equipe: ProcessoEquipe[]
+  tags: string[]
+  anexos: ProcessoAnexo[]
+  custos: ProcessoCusto[]
+}
+
+export interface ContatoBasico {
+  id: string
+  nome: string
+  telefone: string
+  email?: string
+}
+
+export interface ProcessoValor {
+  honorarios: number
+  custas: number
+  total: number
+  formaPagamento: string
+  parcelas?: number
+}
+
+export interface ProcessoPrazo {
+  id: string
+  descricao: string
+  dataLimite: Date
+  concluido: boolean
+  responsavel: string
+}
+
+export interface ProcessoEquipe {
+  id: string
+  nome: string
+  papel: 'advogado' | 'estagiario' | 'assistente'
+  responsabilidades: string[]
+}
+
+export interface ProcessoAnexo {
+  id: string
+  nome: string
+  tipo: string
+  tamanho: number
+  url: string
+  categoria: string
+  uploadedAt: Date
+  uploadedBy: string
+}
+
+export interface ProcessoCusto {
+  id: string
+  descricao: string
+  valor: number
+  categoria: 'custas' | 'honorarios' | 'despesas'
+  data: Date
+  comprovante?: string
+}
+
 export interface ProcessoDocumento {
   id: string
   nome: string
@@ -84,6 +175,41 @@ export interface DashboardMetrics {
   satisfacaoCliente: number
 }
 
+// Enhanced Dashboard types
+export interface DashboardMetricsEnhanced extends DashboardMetrics {
+  crescimentoContatos: number
+  crescimentoProcessos: number
+  taxaConversao: number
+  receitaMensal: number
+  projecaoReceita: number
+  tempoMedioResolucao: number
+  npsScore: number
+}
+
+export interface ChartConfig {
+  type: 'line' | 'bar' | 'pie' | 'area' | 'heatmap'
+  data: ChartDataPoint[]
+  options: ChartOptions
+  responsive: boolean
+}
+
+export interface ChartOptions {
+  title?: string
+  xAxis?: string
+  yAxis?: string
+  colors?: string[]
+  legend?: boolean
+  grid?: boolean
+}
+
+export interface DashboardCharts {
+  conversasTimeline: ChartConfig
+  processosDistribution: ChartConfig
+  conversionFunnel: ChartConfig
+  activityHeatmap: ChartConfig
+  revenueProjection: ChartConfig
+}
+
 export interface ChartDataPoint {
   date: string
   contatos: number
@@ -100,10 +226,32 @@ export interface ActivityItem {
   timestamp: Date
 }
 
+// Enhanced Activity Feed types
+export interface ActivityFeedItem {
+  id: string
+  type: 'contato' | 'processo' | 'mensagem' | 'documento'
+  action: string
+  description: string
+  user: string
+  timestamp: Date
+  metadata: Record<string, any>
+}
+
+export interface TimelineEvent {
+  id: string
+  tipo: 'criacao' | 'atualizacao' | 'documento' | 'prazo' | 'anotacao'
+  titulo: string
+  descricao: string
+  usuario: string
+  timestamp: Date
+  metadata?: Record<string, any>
+}
+
 // Filter types
 export interface ContatosFilters {
   status?: string
   origem?: string
+  areaInteresse?: string
   dataInicio?: string
   dataFim?: string
   search?: string
@@ -149,6 +297,132 @@ export interface User {
   email: string
   role: 'admin' | 'recepcionista' | 'advogado'
   avatar?: string
+}
+
+// Configuration types
+export interface ProfileSettings {
+  nome: string
+  email: string
+  telefone: string
+  oab: string
+  especialidades: string[]
+  avatar?: File
+  assinatura: string
+}
+
+export interface NotificationSettings {
+  email: {
+    novoContato: boolean
+    processoAtualizado: boolean
+    prazoProximo: boolean
+    mensagemRecebida: boolean
+  }
+  push: {
+    novoContato: boolean
+    processoAtualizado: boolean
+    prazoProximo: boolean
+  }
+  whatsapp: {
+    horarioFuncionamento: {
+      inicio: string
+      fim: string
+      diasSemana: number[]
+    }
+    mensagemAutomatica: boolean
+    respostaRapida: string[]
+  }
+}
+
+export interface WhatsAppSettings {
+  token: string
+  webhookUrl: string
+  phoneNumberId: string
+  businessAccountId: string
+  templates: MessageTemplate[]
+  autoResponses: AutoResponse[]
+}
+
+export interface MessageTemplate {
+  id: string
+  nome: string
+  categoria: string
+  conteudo: string
+  variaveis: string[]
+}
+
+export interface AutoResponse {
+  id: string
+  trigger: string
+  response: string
+  active: boolean
+}
+
+export interface SystemSettings {
+  tema: 'light' | 'dark' | 'auto'
+  idioma: string
+  timezone: string
+  formatoData: string
+  formatoHora: string
+  backup: {
+    automatico: boolean
+    frequencia: 'diario' | 'semanal' | 'mensal'
+    retencao: number
+  }
+}
+
+// Form types
+export interface ContatoFormData {
+  nome: string
+  telefone: string
+  email?: string
+  endereco?: EnderecoCompleto
+  areaInteresse: string[]
+  observacoes?: string
+  tags: string[]
+  favorito: boolean
+}
+
+export interface ProcessoFormData {
+  titulo: string
+  numero?: string
+  descricao?: string
+  contatoId: string
+  areaJuridica: string
+  status: ProcessoEnhanced['status']
+  prioridade: ProcessoEnhanced['prioridade']
+  advogadoResponsavel?: string
+  prazoLimite?: Date
+  observacoes?: string
+  tags: string[]
+}
+
+// Error handling types
+export interface ErrorBoundaryState {
+  hasError: boolean
+  error?: Error
+  errorInfo?: any // Using any instead of ErrorInfo to avoid React import in types
+}
+
+export interface ApiErrorHandler {
+  handleNetworkError: (error: Error) => void
+  handleValidationError: (errors: ValidationError[]) => void
+  handleAuthError: (error: AuthError) => void
+  handleServerError: (error: ServerError) => void
+}
+
+export interface ValidationError {
+  field: string
+  message: string
+  code: string
+}
+
+export interface AuthError extends Error {
+  code: 'UNAUTHORIZED' | 'FORBIDDEN' | 'TOKEN_EXPIRED'
+}
+
+export interface ServerError extends Error {
+  code: 'INTERNAL_ERROR' | 'SERVICE_UNAVAILABLE' | 'TIMEOUT'
+  statusCode: number
 }
 
 // WebSocket event types

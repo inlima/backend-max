@@ -1,0 +1,2462 @@
+<testsuites id="" name="" tests="595" failures="0" skipped="595" errors="0" time="0.2942719999999999">
+<testsuite name="accessibility-compliance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Dashboard" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Contatos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Processos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Configurações" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Keyboard navigation complete workflow" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Screen reader compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › High contrast mode compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Reduced motion preferences" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Focus trap in modals and drawers" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Error handling accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Dynamic content accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Mobile accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="complete-user-flow.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Complete User Flow E2E Tests › complete advocacia workflow: dashboard → contatos → processos" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › real-time updates across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › error handling and recovery across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › accessibility across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › performance across modules with large datasets" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › responsive design across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › data consistency across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › offline and reconnection handling" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="contatos.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="19" failures="0" skipped="19" time="0" errors="0">
+<testcase name="Contatos E2E Tests › should load contatos page with data" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should search contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by status" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by origem" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should open contato detail drawer" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should create new contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should validate contato form" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should edit contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should delete contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should sort contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle pagination" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should select multiple contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be responsive on mobile" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle real-time updates" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle API errors" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be accessible" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle empty state" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should maintain filters during navigation" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should load quickly with large datasets" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="critical-user-journeys.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="6" failures="0" skipped="6" time="0" errors="0">
+<testcase name="Critical User Journeys E2E Tests › complete law firm workflow: dashboard → create contact → create process → configure settings" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › client lifecycle: WhatsApp contact → qualification → process creation → case management" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › bulk operations workflow: mass contact import → bulk process creation → bulk status updates" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › error recovery workflow: network failures → offline mode → data synchronization" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › accessibility compliance workflow: keyboard navigation → screen reader compatibility → WCAG validation" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › performance under load: large datasets → concurrent operations → response times" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="dashboard.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Dashboard E2E Tests › should load dashboard with all metrics" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should display interactive charts" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should show recent activity" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on mobile devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on tablet devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should load quickly" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle WebSocket connection status" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should navigate to other sections from dashboard" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle API errors gracefully" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be accessible" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle real-time updates" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should maintain state during navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle offline state" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should support keyboard navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle different screen sizes" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance-load.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Performance Under Load E2E Tests › Dashboard performance with large datasets" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Contatos table performance with 10,000+ records" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Processos table performance with complex data" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Concurrent user operations simulation" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Memory leak detection during extended usage" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Network throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › CPU throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Large form performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › WebSocket performance under load" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Image and asset loading performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Database query simulation performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Performance Tests › dashboard should load within performance budget" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › contatos table should handle large datasets efficiently" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › real-time updates should not impact performance" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage should remain stable" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › bundle size should be within limits" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should handle concurrent users simulation" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should maintain performance on slow networks" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="responsive-design.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="chromium" tests="41" failures="0" skipped="41" time="0" errors="0">
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive navigation flow across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive form interactions" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive data visualization" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive accessibility across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive performance across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="accessibility-compliance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Dashboard" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Contatos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Processos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Configurações" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Keyboard navigation complete workflow" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Screen reader compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › High contrast mode compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Reduced motion preferences" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Focus trap in modals and drawers" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Error handling accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Dynamic content accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Mobile accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="complete-user-flow.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Complete User Flow E2E Tests › complete advocacia workflow: dashboard → contatos → processos" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › real-time updates across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › error handling and recovery across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › accessibility across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › performance across modules with large datasets" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › responsive design across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › data consistency across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › offline and reconnection handling" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="contatos.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="19" failures="0" skipped="19" time="0" errors="0">
+<testcase name="Contatos E2E Tests › should load contatos page with data" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should search contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by status" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by origem" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should open contato detail drawer" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should create new contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should validate contato form" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should edit contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should delete contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should sort contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle pagination" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should select multiple contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be responsive on mobile" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle real-time updates" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle API errors" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be accessible" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle empty state" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should maintain filters during navigation" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should load quickly with large datasets" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="critical-user-journeys.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="6" failures="0" skipped="6" time="0" errors="0">
+<testcase name="Critical User Journeys E2E Tests › complete law firm workflow: dashboard → create contact → create process → configure settings" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › client lifecycle: WhatsApp contact → qualification → process creation → case management" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › bulk operations workflow: mass contact import → bulk process creation → bulk status updates" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › error recovery workflow: network failures → offline mode → data synchronization" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › accessibility compliance workflow: keyboard navigation → screen reader compatibility → WCAG validation" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › performance under load: large datasets → concurrent operations → response times" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="dashboard.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Dashboard E2E Tests › should load dashboard with all metrics" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should display interactive charts" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should show recent activity" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on mobile devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on tablet devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should load quickly" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle WebSocket connection status" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should navigate to other sections from dashboard" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle API errors gracefully" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be accessible" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle real-time updates" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should maintain state during navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle offline state" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should support keyboard navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle different screen sizes" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance-load.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Performance Under Load E2E Tests › Dashboard performance with large datasets" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Contatos table performance with 10,000+ records" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Processos table performance with complex data" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Concurrent user operations simulation" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Memory leak detection during extended usage" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Network throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › CPU throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Large form performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › WebSocket performance under load" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Image and asset loading performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Database query simulation performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Performance Tests › dashboard should load within performance budget" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › contatos table should handle large datasets efficiently" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › real-time updates should not impact performance" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage should remain stable" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › bundle size should be within limits" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should handle concurrent users simulation" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should maintain performance on slow networks" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="responsive-design.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="firefox" tests="41" failures="0" skipped="41" time="0" errors="0">
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive navigation flow across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive form interactions" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive data visualization" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive accessibility across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive performance across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="accessibility-compliance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Dashboard" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Contatos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Processos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Configurações" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Keyboard navigation complete workflow" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Screen reader compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › High contrast mode compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Reduced motion preferences" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Focus trap in modals and drawers" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Error handling accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Dynamic content accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Mobile accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="complete-user-flow.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Complete User Flow E2E Tests › complete advocacia workflow: dashboard → contatos → processos" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › real-time updates across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › error handling and recovery across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › accessibility across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › performance across modules with large datasets" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › responsive design across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › data consistency across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › offline and reconnection handling" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="contatos.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="19" failures="0" skipped="19" time="0" errors="0">
+<testcase name="Contatos E2E Tests › should load contatos page with data" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should search contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by status" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by origem" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should open contato detail drawer" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should create new contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should validate contato form" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should edit contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should delete contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should sort contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle pagination" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should select multiple contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be responsive on mobile" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle real-time updates" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle API errors" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be accessible" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle empty state" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should maintain filters during navigation" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should load quickly with large datasets" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="critical-user-journeys.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="6" failures="0" skipped="6" time="0" errors="0">
+<testcase name="Critical User Journeys E2E Tests › complete law firm workflow: dashboard → create contact → create process → configure settings" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › client lifecycle: WhatsApp contact → qualification → process creation → case management" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › bulk operations workflow: mass contact import → bulk process creation → bulk status updates" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › error recovery workflow: network failures → offline mode → data synchronization" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › accessibility compliance workflow: keyboard navigation → screen reader compatibility → WCAG validation" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › performance under load: large datasets → concurrent operations → response times" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="dashboard.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Dashboard E2E Tests › should load dashboard with all metrics" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should display interactive charts" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should show recent activity" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on mobile devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on tablet devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should load quickly" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle WebSocket connection status" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should navigate to other sections from dashboard" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle API errors gracefully" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be accessible" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle real-time updates" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should maintain state during navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle offline state" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should support keyboard navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle different screen sizes" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance-load.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Performance Under Load E2E Tests › Dashboard performance with large datasets" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Contatos table performance with 10,000+ records" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Processos table performance with complex data" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Concurrent user operations simulation" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Memory leak detection during extended usage" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Network throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › CPU throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Large form performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › WebSocket performance under load" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Image and asset loading performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Database query simulation performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Performance Tests › dashboard should load within performance budget" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › contatos table should handle large datasets efficiently" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › real-time updates should not impact performance" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage should remain stable" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › bundle size should be within limits" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should handle concurrent users simulation" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should maintain performance on slow networks" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="responsive-design.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="webkit" tests="41" failures="0" skipped="41" time="0" errors="0">
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive navigation flow across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive form interactions" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive data visualization" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive accessibility across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive performance across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="accessibility-compliance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Dashboard" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Contatos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Processos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Configurações" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Keyboard navigation complete workflow" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Screen reader compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › High contrast mode compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Reduced motion preferences" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Focus trap in modals and drawers" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Error handling accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Dynamic content accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Mobile accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="complete-user-flow.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Complete User Flow E2E Tests › complete advocacia workflow: dashboard → contatos → processos" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › real-time updates across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › error handling and recovery across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › accessibility across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › performance across modules with large datasets" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › responsive design across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › data consistency across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › offline and reconnection handling" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="contatos.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="19" failures="0" skipped="19" time="0" errors="0">
+<testcase name="Contatos E2E Tests › should load contatos page with data" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should search contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by status" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by origem" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should open contato detail drawer" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should create new contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should validate contato form" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should edit contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should delete contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should sort contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle pagination" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should select multiple contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be responsive on mobile" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle real-time updates" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle API errors" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be accessible" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle empty state" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should maintain filters during navigation" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should load quickly with large datasets" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="critical-user-journeys.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="6" failures="0" skipped="6" time="0" errors="0">
+<testcase name="Critical User Journeys E2E Tests › complete law firm workflow: dashboard → create contact → create process → configure settings" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › client lifecycle: WhatsApp contact → qualification → process creation → case management" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › bulk operations workflow: mass contact import → bulk process creation → bulk status updates" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › error recovery workflow: network failures → offline mode → data synchronization" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › accessibility compliance workflow: keyboard navigation → screen reader compatibility → WCAG validation" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › performance under load: large datasets → concurrent operations → response times" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="dashboard.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Dashboard E2E Tests › should load dashboard with all metrics" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should display interactive charts" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should show recent activity" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on mobile devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on tablet devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should load quickly" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle WebSocket connection status" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should navigate to other sections from dashboard" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle API errors gracefully" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be accessible" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle real-time updates" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should maintain state during navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle offline state" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should support keyboard navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle different screen sizes" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance-load.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Performance Under Load E2E Tests › Dashboard performance with large datasets" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Contatos table performance with 10,000+ records" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Processos table performance with complex data" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Concurrent user operations simulation" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Memory leak detection during extended usage" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Network throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › CPU throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Large form performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › WebSocket performance under load" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Image and asset loading performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Database query simulation performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Performance Tests › dashboard should load within performance budget" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › contatos table should handle large datasets efficiently" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › real-time updates should not impact performance" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage should remain stable" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › bundle size should be within limits" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should handle concurrent users simulation" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should maintain performance on slow networks" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="responsive-design.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Chrome" tests="41" failures="0" skipped="41" time="0" errors="0">
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive navigation flow across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive form interactions" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive data visualization" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive accessibility across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive performance across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="accessibility-compliance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="12" failures="0" skipped="12" time="0" errors="0">
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Dashboard" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Contatos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Processos" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › WCAG 2.1 AA compliance - Configurações" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Keyboard navigation complete workflow" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Screen reader compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › High contrast mode compatibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Reduced motion preferences" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Focus trap in modals and drawers" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Error handling accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Dynamic content accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Accessibility Compliance E2E Tests › Mobile accessibility" classname="accessibility-compliance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="complete-user-flow.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Complete User Flow E2E Tests › complete advocacia workflow: dashboard → contatos → processos" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › real-time updates across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › error handling and recovery across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › accessibility across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › performance across modules with large datasets" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › responsive design across all modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › data consistency across modules" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Complete User Flow E2E Tests › offline and reconnection handling" classname="complete-user-flow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="contatos.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="19" failures="0" skipped="19" time="0" errors="0">
+<testcase name="Contatos E2E Tests › should load contatos page with data" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should search contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by status" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should filter contatos by origem" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should open contato detail drawer" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should create new contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should validate contato form" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should edit contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should delete contato" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should sort contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle pagination" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should select multiple contatos" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be responsive on mobile" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle real-time updates" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle API errors" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should be accessible" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should handle empty state" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should maintain filters during navigation" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Contatos E2E Tests › should load quickly with large datasets" classname="contatos.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="critical-user-journeys.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="6" failures="0" skipped="6" time="0" errors="0">
+<testcase name="Critical User Journeys E2E Tests › complete law firm workflow: dashboard → create contact → create process → configure settings" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › client lifecycle: WhatsApp contact → qualification → process creation → case management" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › bulk operations workflow: mass contact import → bulk process creation → bulk status updates" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › error recovery workflow: network failures → offline mode → data synchronization" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › accessibility compliance workflow: keyboard navigation → screen reader compatibility → WCAG validation" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Critical User Journeys E2E Tests › performance under load: large datasets → concurrent operations → response times" classname="critical-user-journeys.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="dashboard.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="Dashboard E2E Tests › should load dashboard with all metrics" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should display interactive charts" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should show recent activity" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on mobile devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be responsive on tablet devices" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should load quickly" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle WebSocket connection status" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should navigate to other sections from dashboard" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle API errors gracefully" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should be accessible" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle real-time updates" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should maintain state during navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle offline state" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should support keyboard navigation" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Dashboard E2E Tests › should handle different screen sizes" classname="dashboard.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance-load.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Performance Under Load E2E Tests › Dashboard performance with large datasets" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Contatos table performance with 10,000+ records" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Processos table performance with complex data" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Concurrent user operations simulation" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Memory leak detection during extended usage" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Network throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › CPU throttling performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Large form performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › WebSocket performance under load" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Image and asset loading performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Under Load E2E Tests › Database query simulation performance" classname="performance-load.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="performance.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Performance Tests › dashboard should load within performance budget" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › contatos table should handle large datasets efficiently" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › real-time updates should not impact performance" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage should remain stable" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › bundle size should be within limits" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should handle concurrent users simulation" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › should maintain performance on slow networks" classname="performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="responsive-design.spec.ts" timestamp="2025-09-10T03:36:25.856Z" hostname="Mobile Safari" tests="41" failures="0" skipped="41" time="0" errors="0">
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone SE (320x568)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 8 (375x667)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPhone 11 Pro Max (414x896)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Portrait (768x1024)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - iPad Landscape (1024x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Laptop (1366x768)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Desktop (1440x900)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - Large Desktop (1920x1080)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Dashboard responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Contatos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Processos responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › Configurações responsive design - 4K Desktop (2560x1440)" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive navigation flow across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive form interactions" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive data visualization" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive accessibility across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Responsive Design E2E Tests › responsive performance across devices" classname="responsive-design.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

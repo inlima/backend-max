@@ -4,7 +4,7 @@ import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { IconX, IconUser, IconPhone, IconMail, IconLoader } from "@tabler/icons-react"
+import { IconX, IconUser, IconPhone, IconMail, IconLoader, IconMapPin, IconStar, IconTag, IconPlus } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -26,12 +26,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-import { Contato } from "@/types"
-import { useCreateContato } from "@/hooks/use-api"
+import { Textarea } from "@/components/ui/textarea"
+import { Badge } from "@/components/ui/badge"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Contato, ContatoFormData, EnderecoCompleto } from "@/types"
+import { useCreateContato } from "@/hooks/use-react-query"
 import { toast } from "sonner"
-import { FormErrorBoundary } from "@/components/error-boundaries/form-error-boundary"
-import { TextField, SelectField, PhoneField } from "@/components/forms/form-field"
-import { FormValidationSummary, ServerErrorDisplay } from "@/components/forms/form-validation"
 
 // Enhanced validation schema
 const createContatoSchema = z.object({
@@ -50,25 +50,40 @@ const createContatoSchema = z.object({
     .optional()
     .or(z.literal(""))
     .refine((val) => !val || val.includes("@"), "Email deve conter @"),
-  areaInteresse: z.string().optional(),
+  areaInteresse: z.array(z.string()).optional(),
   tipoSolicitacao: z.enum(["agendamento", "consulta", "informacao"]).optional(),
   preferenciaAtendimento: z.enum(["presencial", "online"]).optional(),
+  endereco: z.object({
+    cep: z.string().regex(/^\d{5}-?\d{3}$/, "CEP inválido").optional(),
+    logradouro: z.string().optional(),
+    numero: z.string().optional(),
+    complemento: z.string().optional(),
+    bairro: z.string().optional(),
+    cidade: z.string().optional(),
+    estado: z.string().optional(),
+  }).optional(),
+  observacoes: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  favorito: z.boolean().optional(),
 })
 
 type CreateContatoFormData = z.infer<typeof createContatoSchema>
 
 interface CreateContatoDialogProps {
   open: boolean
-  onClose: () => void
-  onSuccess?: (contato: Contato) => void
+  onOpenChange: (open: boolean) => void
+  onContatoCreated?: () => void
 }
 
 export function CreateContatoDialog({ 
   open, 
-  onClose, 
-  onSuccess 
+  onOpenChange, 
+  onContatoCreated 
 }: CreateContatoDialogProps) {
   const { trigger: createContato, isMutating } = useCreateContato()
+  const [tags, setTags] = React.useState<string[]>([])
+  const [newTag, setNewTag] = React.useState("")
+  const [cepLoading, setCepLoading] = React.useState(false)
   
   const {
     register,
@@ -77,19 +92,80 @@ export function CreateContatoDialog({
     reset,
     setValue,
     watch,
+    getValues,
   } = useForm<CreateContatoFormData>({
     resolver: zodResolver(createContatoSchema),
     defaultValues: {
       nome: "",
       telefone: "",
       email: "",
-      areaInteresse: "",
+      areaInteresse: [],
+      endereco: {
+        cep: "",
+        logradouro: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+      },
+      observacoes: "",
+      tags: [],
+      favorito: false,
     }
   })
 
   // Watch form values for controlled components
   const tipoSolicitacao = watch("tipoSolicitacao")
   const preferenciaAtendimento = watch("preferenciaAtendimento")
+  const favorito = watch("favorito")
+  const cep = watch("endereco.cep")
+
+  // CEP lookup function
+  const lookupCep = async (cepValue: string) => {
+    const cleanCep = cepValue.replace(/\D/g, '')
+    if (cleanCep.length !== 8) return
+
+    setCepLoading(true)
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`)
+      const data = await response.json()
+      
+      if (!data.erro) {
+        setValue("endereco.logradouro", data.logradouro || "")
+        setValue("endereco.bairro", data.bairro || "")
+        setValue("endereco.cidade", data.localidade || "")
+        setValue("endereco.estado", data.uf || "")
+      }
+    } catch (error) {
+      console.error("Erro ao buscar CEP:", error)
+    } finally {
+      setCepLoading(false)
+    }
+  }
+
+  // Watch CEP changes for auto-lookup
+  React.useEffect(() => {
+    if (cep && cep.length === 9) { // Format: 12345-678
+      lookupCep(cep)
+    }
+  }, [cep])
+
+  // Tag management functions
+  const addTag = () => {
+    if (newTag.trim() && !tags.includes(newTag.trim())) {
+      const updatedTags = [...tags, newTag.trim()]
+      setTags(updatedTags)
+      setValue("tags", updatedTags)
+      setNewTag("")
+    }
+  }
+
+  const removeTag = (tagToRemove: string) => {
+    const updatedTags = tags.filter(tag => tag !== tagToRemove)
+    setTags(updatedTags)
+    setValue("tags", updatedTags)
+  }
 
   const onSubmit = async (data: CreateContatoFormData) => {
     try {
@@ -101,7 +177,7 @@ export function CreateContatoDialog({
         email: data.email || undefined,
         status: 'novo',
         origem: 'manual',
-        areaInteresse: data.areaInteresse || undefined,
+        areaInteresse: data.areaInteresse?.[0] || undefined, // Take first area for compatibility
         tipoSolicitacao: data.tipoSolicitacao,
         preferenciaAtendimento: data.preferenciaAtendimento,
         primeiroContato: now,
@@ -109,12 +185,17 @@ export function CreateContatoDialog({
         mensagensNaoLidas: 0,
         dadosColetados: {
           clienteType: 'novo',
-          practiceArea: data.areaInteresse,
+          practiceArea: data.areaInteresse?.[0],
           schedulingPreference: data.preferenciaAtendimento,
           wantsScheduling: data.tipoSolicitacao === 'agendamento',
           customRequests: []
         },
         conversaCompleta: false,
+        // Enhanced fields (these would need to be added to the Contato type)
+        // endereco: data.endereco,
+        // tags: data.tags || [],
+        // favorito: data.favorito || false,
+        // observacoes: data.observacoes,
       }
 
       const novoContato = await createContato(contatoData)
@@ -124,8 +205,10 @@ export function CreateContatoDialog({
       })
       
       reset()
-      onSuccess?.(novoContato)
-      onClose()
+      setTags([])
+      setNewTag("")
+      onContatoCreated?.()
+      onOpenChange(false)
     } catch (error) {
       toast.error("Erro ao criar contato", {
         description: error instanceof Error ? error.message : "Tente novamente."
@@ -136,7 +219,9 @@ export function CreateContatoDialog({
   const handleClose = () => {
     if (!isMutating) {
       reset()
-      onClose()
+      setTags([])
+      setNewTag("")
+      onOpenChange(false)
     }
   }
 
@@ -236,9 +321,42 @@ export function CreateContatoDialog({
                   <Input
                     id="areaInteresse"
                     placeholder="Ex: Direito Civil, Trabalhista..."
-                    {...register("areaInteresse")}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        const value = e.currentTarget.value.trim()
+                        if (value) {
+                          const currentAreas = getValues("areaInteresse") || []
+                          if (!currentAreas.includes(value)) {
+                            setValue("areaInteresse", [...currentAreas, value])
+                            e.currentTarget.value = ""
+                          }
+                        }
+                      }
+                    }}
                     disabled={isMutating}
                   />
+                  {watch("areaInteresse") && watch("areaInteresse")!.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {watch("areaInteresse")!.map((area, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {area}
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="h-4 w-4 p-0 ml-1 hover:bg-transparent"
+                            onClick={() => {
+                              const currentAreas = getValues("areaInteresse") || []
+                              setValue("areaInteresse", currentAreas.filter((_, i) => i !== index))
+                            }}
+                          >
+                            <IconX className="h-2 w-2" />
+                          </Button>
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -279,6 +397,163 @@ export function CreateContatoDialog({
                     <SelectItem value="online">Online</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              {/* Favorite checkbox */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="favorito"
+                  checked={favorito}
+                  onCheckedChange={(checked) => setValue("favorito", !!checked)}
+                  disabled={isMutating}
+                />
+                <Label htmlFor="favorito" className="flex items-center gap-2">
+                  <IconStar className="w-4 h-4" />
+                  Marcar como favorito
+                </Label>
+              </div>
+            </div>
+
+            <Separator />
+
+            {/* Address Information */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-lg">Endereço (opcional)</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="cep">CEP</Label>
+                  <div className="relative">
+                    <IconMapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      id="cep"
+                      placeholder="12345-678"
+                      className="pl-10"
+                      {...register("endereco.cep")}
+                      disabled={isMutating || cepLoading}
+                    />
+                    {cepLoading && (
+                      <IconLoader className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin" />
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="logradouro">Logradouro</Label>
+                  <Input
+                    id="logradouro"
+                    placeholder="Rua, Avenida..."
+                    {...register("endereco.logradouro")}
+                    disabled={isMutating}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="numero">Número</Label>
+                  <Input
+                    id="numero"
+                    placeholder="123"
+                    {...register("endereco.numero")}
+                    disabled={isMutating}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="complemento">Complemento</Label>
+                  <Input
+                    id="complemento"
+                    placeholder="Apto, Sala..."
+                    {...register("endereco.complemento")}
+                    disabled={isMutating}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="bairro">Bairro</Label>
+                  <Input
+                    id="bairro"
+                    placeholder="Centro"
+                    {...register("endereco.bairro")}
+                    disabled={isMutating}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="cidade">Cidade</Label>
+                  <Input
+                    id="cidade"
+                    placeholder="São Paulo"
+                    {...register("endereco.cidade")}
+                    disabled={isMutating}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
+            {/* Tags and Notes */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-lg">Tags e Observações</h3>
+              
+              <div className="space-y-2">
+                <Label htmlFor="tags">Tags</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="tags"
+                    placeholder="Adicionar tag..."
+                    value={newTag}
+                    onChange={(e) => setNewTag(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        addTag()
+                      }
+                    }}
+                    disabled={isMutating}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={addTag}
+                    disabled={!newTag.trim() || isMutating}
+                  >
+                    <IconPlus className="w-4 h-4" />
+                  </Button>
+                </div>
+                {tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {tags.map((tag, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
+                        <IconTag className="w-3 h-3 mr-1" />
+                        {tag}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-4 w-4 p-0 ml-1 hover:bg-transparent"
+                          onClick={() => removeTag(tag)}
+                        >
+                          <IconX className="h-2 w-2" />
+                        </Button>
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="observacoes">Observações</Label>
+                <Textarea
+                  id="observacoes"
+                  placeholder="Observações adicionais sobre o contato..."
+                  rows={3}
+                  {...register("observacoes")}
+                  disabled={isMutating}
+                />
               </div>
             </div>
           </div>

@@ -18,22 +18,22 @@ import {
   IconUsers,
   IconFileDescription,
   IconMessageCircle,
-  IconTrendingUp,
-  IconClock,
-  IconStar,
-  IconActivity
+  IconActivity,
+  IconRefresh,
+  IconClock
 } from '@tabler/icons-react'
 import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
+import { Button } from '@/components/ui/button'
+import { EnhancedMetricsCards } from '@/components/enhanced-metrics-cards'
+import { DashboardChartsSection } from '@/components/dashboard-charts-section'
+import { RealTimeActivityFeed } from '@/components/real-time-activity-feed'
+import { DashboardFiltersExport } from '@/components/dashboard-filters-export'
+import { useDashboardMetrics } from '@/hooks/use-dashboard-metrics'
+import { useDashboardCharts } from '@/hooks/use-dashboard-charts'
+import { useActivityFeed } from '@/hooks/use-activity-feed'
+import { useDashboardFilters } from '@/hooks/use-dashboard-filters'
 
-interface DashboardMetrics {
-  totalContatos: number
-  contatosHoje: number
-  processosAtivos: number
-  taxaResposta: number
-  tempoMedioResposta: string
-  satisfacaoCliente: number
-}
+// Remove the local interface since we're using the one from types
 
 interface ActivityItem {
   id: string
@@ -47,7 +47,17 @@ interface ActivityItem {
 export default function DashboardPage() {
   const { user, isAuthenticated, isLoading } = useAuth()
   const router = useRouter()
-  const [metrics, setMetrics] = useState<DashboardMetrics | null>(null)
+  const { metrics, isLoading: metricsLoading, error: metricsError, refresh } = useDashboardMetrics()
+  const { charts, isLoading: chartsLoading, updateDateRange } = useDashboardCharts()
+  const { activities, isLoading: activitiesLoading } = useActivityFeed({ enableRealTime: true })
+  const { 
+    filters, 
+    setFilters, 
+    exportDashboard, 
+    isExporting,
+    autoRefreshEnabled,
+    toggleAutoRefresh 
+  } = useDashboardFilters({ persistFilters: true, autoRefresh: true })
   const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([])
   const [loadingData, setLoadingData] = useState(true)
 
@@ -58,21 +68,11 @@ export default function DashboardPage() {
   }, [isAuthenticated, isLoading, router])
 
   useEffect(() => {
-    // Simular carregamento de dados
-    const loadDashboardData = async () => {
+    // Load recent activity data
+    const loadActivityData = async () => {
       try {
-        // Simular delay de API
-        await new Promise(resolve => setTimeout(resolve, 1000))
-
-        // Dados mock para demonstração
-        setMetrics({
-          totalContatos: 156,
-          contatosHoje: 12,
-          processosAtivos: 23,
-          taxaResposta: 94.5,
-          tempoMedioResposta: "2h 15min",
-          satisfacaoCliente: 4.7
-        })
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 800))
 
         setRecentActivity([
           {
@@ -98,17 +98,33 @@ export default function DashboardPage() {
             contato: 'Ana Costa',
             telefone: '(11) 77777-7777',
             timestamp: new Date(Date.now() - 30 * 60 * 1000)
+          },
+          {
+            id: '4',
+            tipo: 'Documento',
+            descricao: 'Documento anexado ao processo',
+            contato: 'Carlos Oliveira',
+            telefone: '(11) 66666-6666',
+            timestamp: new Date(Date.now() - 45 * 60 * 1000)
+          },
+          {
+            id: '5',
+            tipo: 'Prazo',
+            descricao: 'Prazo próximo ao vencimento',
+            contato: 'Fernanda Lima',
+            telefone: '(11) 55555-5555',
+            timestamp: new Date(Date.now() - 60 * 60 * 1000)
           }
         ])
       } catch (error) {
-        console.error('Erro ao carregar dados do dashboard:', error)
+        console.error('Erro ao carregar atividades:', error)
       } finally {
         setLoadingData(false)
       }
     }
 
     if (isAuthenticated) {
-      loadDashboardData()
+      loadActivityData()
     }
   }, [isAuthenticated])
 
@@ -177,10 +193,10 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       {/* Header */}
-      <header className="flex h-16 shrink-0 items-center gap-2">
+      <header className="flex h-16 shrink-0 items-center gap-2" role="banner">
         <div className="flex items-center gap-2 px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
+          <SidebarTrigger className="-ml-1" aria-label="Abrir menu lateral" />
+          <Separator orientation="vertical" className="mr-2 h-4" aria-hidden="true" />
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem className="hidden md:block">
@@ -198,154 +214,108 @@ export default function DashboardPage() {
       </header>
 
       {/* Main Content */}
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <main className="flex flex-1 flex-col gap-4 p-4 pt-0" id="main-content" role="main">
         {/* Welcome Section */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">
-            Bem-vindo, {user?.name}!
-          </h1>
-          <p className="text-muted-foreground">
-            Aqui está um resumo das atividades do seu escritório hoje.
-          </p>
-        </div>
-
-        {/* Metrics Cards */}
-        {loadingData ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {[...Array(4)].map((_, i) => (
-              <Card key={i}>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
-                  <div className="h-4 w-4 bg-gray-200 rounded animate-pulse" />
-                </CardHeader>
-                <CardContent>
-                  <div className="h-8 w-16 bg-gray-200 rounded animate-pulse mb-2" />
-                  <div className="h-3 w-24 bg-gray-200 rounded animate-pulse" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total de Contatos
-                </CardTitle>
-                <IconUsers className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.totalContatos}</div>
-                <p className="text-xs text-muted-foreground">
-                  +{metrics?.contatosHoje} hoje
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Processos Ativos
-                </CardTitle>
-                <IconFileDescription className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.processosAtivos}</div>
-                <p className="text-xs text-muted-foreground">
-                  Em andamento
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Taxa de Resposta
-                </CardTitle>
-                <IconTrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.taxaResposta}%</div>
-                <Progress value={metrics?.taxaResposta} className="mt-2" />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Satisfação
-                </CardTitle>
-                <IconStar className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{metrics?.satisfacaoCliente}/5</div>
-                <p className="text-xs text-muted-foreground">
-                  Avaliação média
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
-        {/* Recent Activity */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4">
-            <CardHeader>
-              <CardTitle>Atividade Recente</CardTitle>
-              <CardDescription>
-                Últimas atividades do sistema
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {loadingData ? (
-                <div className="space-y-4">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="flex items-center space-x-4">
-                      <div className="h-8 w-8 bg-gray-200 rounded animate-pulse" />
-                      <div className="space-y-2 flex-1">
-                        <div className="h-4 w-3/4 bg-gray-200 rounded animate-pulse" />
-                        <div className="h-3 w-1/2 bg-gray-200 rounded animate-pulse" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {recentActivity.map((activity) => (
-                    <div key={activity.id} className="flex items-center space-x-4">
-                      <div className={`p-2 rounded-full ${getActivityColor(activity.tipo)}`}>
-                        {getActivityIcon(activity.tipo)}
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          {activity.descricao}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {activity.contato} • {activity.telefone}
-                        </p>
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {formatTimeAgo(activity.timestamp)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+        <section className="mb-6 flex items-center justify-between" aria-labelledby="welcome-heading">
+          <div>
+            <h1 id="welcome-heading" className="text-3xl font-bold tracking-tight">
+              Bem-vindo, {user?.name}!
+            </h1>
+            <p className="text-muted-foreground">
+              Aqui está um resumo das atividades do seu escritório hoje.
+              {autoRefreshEnabled && (
+                <span className="ml-2 text-green-600 text-sm" role="status" aria-live="polite">
+                  • Atualização automática ativa
+                </span>
               )}
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refresh}
+            disabled={metricsLoading || isExporting}
+            className="flex items-center gap-2"
+            aria-label={metricsLoading ? 'Atualizando dados...' : 'Atualizar dados do dashboard'}
+          >
+            <IconRefresh 
+              className={`h-4 w-4 ${metricsLoading ? 'animate-spin' : ''}`} 
+              aria-hidden="true"
+            />
+            Atualizar
+          </Button>
+        </section>
+
+        {/* Dashboard Filters and Export */}
+        <DashboardFiltersExport
+          filters={filters}
+          onFiltersChange={setFilters}
+          onExport={exportDashboard}
+          onRefresh={refresh}
+          isLoading={metricsLoading || chartsLoading}
+          className="mb-6"
+        />
+
+        {/* Enhanced Metrics Cards */}
+        <EnhancedMetricsCards 
+          metrics={metrics} 
+          isLoading={metricsLoading}
+          className="mb-6"
+        />
+
+        {/* Error handling for metrics */}
+        {metricsError && (
+          <Card className="mb-6 border-red-200 bg-red-50" role="alert" aria-live="assertive">
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-2 text-red-800">
+                <IconActivity className="h-4 w-4" aria-hidden="true" />
+                <span className="text-sm font-medium">
+                  Erro ao carregar métricas: {metricsError.message}
+                </span>
+              </div>
             </CardContent>
           </Card>
+        )}
 
-          <Card className="col-span-3">
+        {/* Dashboard Charts Section */}
+        <DashboardChartsSection 
+          charts={charts}
+          isLoading={chartsLoading}
+          onDateRangeChange={updateDateRange}
+          className="mb-6"
+        />
+
+        {/* Real-time Activity Feed */}
+        <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-7" aria-labelledby="activity-section-heading">
+          <div className="col-span-4">
+            <h2 id="activity-section-heading" className="sr-only">Feed de Atividades em Tempo Real</h2>
+            <RealTimeActivityFeed
+              activities={activities}
+              isLoading={activitiesLoading}
+              showFilters={true}
+              enableRealTime={true}
+              maxItems={50}
+              onActivityClick={(activity) => {
+                console.log('Activity clicked:', activity)
+                // Handle activity click - could open a modal or navigate
+              }}
+            />
+          </div>
+
+          <Card className="col-span-3" role="region" aria-labelledby="response-time-heading">
             <CardHeader>
-              <CardTitle>Tempo Médio de Resposta</CardTitle>
+              <CardTitle id="response-time-heading">Tempo Médio de Resposta</CardTitle>
               <CardDescription>
                 Performance do atendimento
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-center space-x-2">
-                <IconClock className="h-8 w-8 text-blue-600" />
+                <IconClock className="h-8 w-8 text-blue-600" aria-hidden="true" />
                 <div>
-                  <div className="text-2xl font-bold">{metrics?.tempoMedioResposta}</div>
+                  <div className="text-2xl font-bold" aria-label={`Tempo médio de resposta: ${metrics?.tempoMedioResposta}`}>
+                    {metrics?.tempoMedioResposta}
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     Tempo médio de primeira resposta
                   </p>
@@ -354,15 +324,15 @@ export default function DashboardPage() {
               <div className="mt-4">
                 <div className="flex items-center justify-between text-sm">
                   <span>Meta: 2h</span>
-                  <Badge variant="secondary" className="bg-green-100 text-green-800">
+                  <Badge variant="secondary" className="bg-green-100 text-green-800" role="status">
                     Dentro da meta
                   </Badge>
                 </div>
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   )
 }

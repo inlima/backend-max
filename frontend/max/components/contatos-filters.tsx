@@ -88,6 +88,7 @@ export function ContatosFilters({
     if (filters.search) count++
     if (filters.status) count++
     if (filters.origem) count++
+    if (filters.areaInteresse) count++
     if (filters.dataInicio || filters.dataFim) count++
     return count
   }, [filters])
@@ -100,7 +101,7 @@ export function ContatosFilters({
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Buscar por nome ou telefone..."
+            placeholder="Buscar por nome, telefone ou email..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             className="pl-10 pr-10"
@@ -118,7 +119,7 @@ export function ContatosFilters({
         </div>
 
         {/* Filter controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Status filter */}
           <div className="flex items-center gap-2">
             <Label htmlFor="status-filter" className="text-sm font-medium whitespace-nowrap">
@@ -157,6 +158,35 @@ export function ContatosFilters({
                 <SelectItem value="all">Todas</SelectItem>
                 <SelectItem value="whatsapp">WhatsApp</SelectItem>
                 <SelectItem value="manual">Manual</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Area de Interesse filter */}
+          <div className="flex items-center gap-2">
+            <Label htmlFor="area-filter" className="text-sm font-medium whitespace-nowrap">
+              Área:
+            </Label>
+            <Select
+              value={filters.areaInteresse || "all"}
+              onValueChange={(value) => onFiltersChange({
+                ...filters,
+                areaInteresse: value === "all" ? undefined : value,
+              })}
+            >
+              <SelectTrigger className="w-40" id="area-filter">
+                <SelectValue placeholder="Todas as áreas" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas as áreas</SelectItem>
+                <SelectItem value="civil">Direito Civil</SelectItem>
+                <SelectItem value="trabalhista">Direito Trabalhista</SelectItem>
+                <SelectItem value="criminal">Direito Criminal</SelectItem>
+                <SelectItem value="familia">Direito de Família</SelectItem>
+                <SelectItem value="empresarial">Direito Empresarial</SelectItem>
+                <SelectItem value="tributario">Direito Tributário</SelectItem>
+                <SelectItem value="previdenciario">Direito Previdenciário</SelectItem>
+                <SelectItem value="consumidor">Direito do Consumidor</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -259,6 +289,31 @@ export function ContatosFilters({
                 size="sm"
                 className="h-4 w-4 p-0 hover:bg-transparent"
                 onClick={() => handleOrigemChange("all")}
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </Badge>
+          )}
+          
+          {filters.areaInteresse && (
+            <Badge variant="secondary" className="gap-1">
+              Área: {filters.areaInteresse === 'civil' ? 'Direito Civil' :
+                     filters.areaInteresse === 'trabalhista' ? 'Direito Trabalhista' :
+                     filters.areaInteresse === 'criminal' ? 'Direito Criminal' :
+                     filters.areaInteresse === 'familia' ? 'Direito de Família' :
+                     filters.areaInteresse === 'empresarial' ? 'Direito Empresarial' :
+                     filters.areaInteresse === 'tributario' ? 'Direito Tributário' :
+                     filters.areaInteresse === 'previdenciario' ? 'Direito Previdenciário' :
+                     filters.areaInteresse === 'consumidor' ? 'Direito do Consumidor' :
+                     filters.areaInteresse}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-4 w-4 p-0 hover:bg-transparent"
+                onClick={() => onFiltersChange({
+                  ...filters,
+                  areaInteresse: undefined,
+                })}
               >
                 <X className="h-3 w-3" />
               </Button>

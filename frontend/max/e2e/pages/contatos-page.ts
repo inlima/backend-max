@@ -305,4 +305,41 @@ export class ContatosPage extends BasePage {
       await expect(cells.first()).toBeVisible()
     }
   }
+
+  // Additional methods for comprehensive testing
+  async expectWhatsAppMessage(messageText: string) {
+    const conversaSection = this.contatoDetailDrawer.locator('[data-testid="conversa-history"]')
+    const message = conversaSection.locator('.message', { hasText: messageText })
+    await expect(message).toBeVisible()
+  }
+
+  async editContatoFromDetail() {
+    const editButton = this.contatoDetailDrawer.locator('[data-testid="edit-contato"]')
+    await editButton.click()
+  }
+
+  async updateContatoStatus(status: string) {
+    const statusSelect = this.contatoDetailDrawer.locator('[data-testid="status-select"]')
+    await statusSelect.click()
+    await this.page.locator(`[data-value="${status}"]`).click()
+    
+    const saveButton = this.contatoDetailDrawer.locator('[data-testid="save-status"]')
+    await saveButton.click()
+  }
+
+  async createProcessoFromContato() {
+    const createProcessoButton = this.contatoDetailDrawer.locator('[data-testid="create-processo-from-contato"]')
+    await createProcessoButton.click()
+  }
+
+  async expectContatoStatus(nomeContato: string, expectedStatus: string) {
+    const contatoRow = this.contatosTable.locator('tr', { hasText: nomeContato })
+    const statusCell = contatoRow.locator('[data-testid="status-cell"]')
+    await expect(statusCell).toContainText(expectedStatus)
+  }
+
+  async expectOfflineIndicator() {
+    const offlineIndicator = this.page.locator('[data-testid="offline-indicator"]')
+    await expect(offlineIndicator).toBeVisible()
+  }
 }

@@ -115,7 +115,7 @@ export function ProcessosFilters({
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Buscar por título, número ou cliente..."
+            placeholder="Buscar por número, título ou cliente..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             className="pl-10 pr-10"

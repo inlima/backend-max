@@ -175,4 +175,31 @@ export class DashboardPage extends BasePage {
       await expect(title).toBeVisible()
     }
   }
+
+  // Additional methods for comprehensive testing
+  async getMetricValue(metricName: string): Promise<string> {
+    const card = this.page.locator(`[data-testid="${metricName}-card"]`)
+    const valueElement = card.locator('[data-testid="metric-value"]')
+    return await valueElement.textContent() || '0'
+  }
+
+  async expectMetricIncrease(metricName: string) {
+    const card = this.page.locator(`[data-testid="${metricName}-card"]`)
+    const increaseIndicator = card.locator('[data-testid="increase-indicator"]')
+    await expect(increaseIndicator).toBeVisible()
+  }
+
+  async expectRecentActivityContains(activityText: string) {
+    const activityItem = this.recentActivityTable.locator('tr', { hasText: activityText })
+    await expect(activityItem).toBeVisible()
+  }
+
+  async expectNewContatoNotification(nomeContato: string) {
+    await this.expectToastMessage(`Novo contato: ${nomeContato}`)
+  }
+
+  async expectOfflineMessage() {
+    const offlineMessage = this.page.locator('[data-testid="offline-message"]')
+    await expect(offlineMessage).toBeVisible()
+  }
 }

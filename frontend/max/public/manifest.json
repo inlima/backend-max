@@ -1,12 +1,13 @@
 {
   "name": "Advocacia Direta - Dashboard",
   "short_name": "Advocacia Direta",
-  "description": "Sistema de gestão de atendimento jurídico via WhatsApp",
+  "description": "Sistema de gestão de atendimento jurídico via WhatsApp com suporte offline",
   "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#667eea",
   "orientation": "portrait-primary",
+  "scope": "/",
   "icons": [
     {
       "src": "/icons/icon-72x72.png",
@@ -57,7 +58,52 @@
       "purpose": "maskable any"
     }
   ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Acesso rápido ao dashboard",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contatos",
+      "short_name": "Contatos",
+      "description": "Gerenciar contatos",
+      "url": "/contatos",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Processos",
+      "short_name": "Processos",
+      "description": "Gerenciar processos",
+      "url": "/processos",
+      "icons": [
+        {
+          "src": "/icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
   "categories": ["business", "productivity"],
   "lang": "pt-BR",
-  "dir": "ltr"
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "offline_enabled": true,
+  "features": [
+    "offline-support",
+    "background-sync",
+    "push-notifications"
+  ]
 }

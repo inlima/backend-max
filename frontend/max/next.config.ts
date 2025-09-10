@@ -66,6 +66,30 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Service Worker headers
+      {
+        source: '/sw.js',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+          {
+            key: 'Service-Worker-Allowed',
+            value: '/',
+          },
+        ],
+      },
+      // Offline page headers
+      {
+        source: '/offline.html',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
     ];
   },
   // Performance optimizations
@@ -75,6 +99,16 @@ const nextConfig: NextConfig = {
   
   // Output configuration for production
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
+  
+  // PWA manifest support
+  async rewrites() {
+    return [
+      {
+        source: '/manifest.json',
+        destination: '/api/manifest',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

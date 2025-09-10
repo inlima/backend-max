@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { WebSocketProvider, ThemeProvider, AuthProvider } from "@/providers";
+import { WebSocketProvider, ThemeProvider, AuthProvider, ReactQueryProvider } from "@/providers";
 import { SecurityProvider } from "@/components/security/security-provider";
 import { Toaster } from "sonner";
+import { ClientOnlyWrapper } from "@/components/client-only-wrapper";
 import { ServiceWorkerRegistration } from "@/components/service-worker-registration";
 import { PerformanceMonitor } from "@/components/performance-monitor";
+import { SkipToContent } from "@/components/accessibility/accessibility-utils";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -64,21 +66,32 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <SkipToContent />
         <SecurityProvider>
           <ThemeProvider>
-            <AuthProvider>
-              <WebSocketProvider>
-                {children}
-                <Toaster 
-                  position="top-right"
-                  richColors
-                  closeButton
-                  duration={4000}
-                />
-                <ServiceWorkerRegistration />
-                <PerformanceMonitor />
-              </WebSocketProvider>
-            </AuthProvider>
+            <ReactQueryProvider>
+              <AuthProvider>
+                <WebSocketProvider>
+                  {children}
+                  <Toaster 
+                    position="top-right"
+                    richColors
+                    closeButton
+                    duration={4000}
+                    toastOptions={{
+                      // Accessibility improvements for toasts
+                      role: 'status',
+                      'aria-live': 'polite',
+                      'aria-atomic': 'true'
+                    }}
+                  />
+                  <ClientOnlyWrapper>
+                    <ServiceWorkerRegistration />
+                    <PerformanceMonitor />
+                  </ClientOnlyWrapper>
+                </WebSocketProvider>
+              </AuthProvider>
+            </ReactQueryProvider>
           </ThemeProvider>
         </SecurityProvider>
       </body>

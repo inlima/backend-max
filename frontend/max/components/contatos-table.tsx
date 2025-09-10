@@ -64,11 +64,23 @@ import {
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Contato } from "@/types"
+import { BulkActionsToolbar } from "@/components/bulk-actions-toolbar"
+import { TagManagementDialog } from "@/components/tag-management-dialog"
+import { BulkExportDialog } from "@/components/bulk-export-dialog"
 
 interface ContatosTableProps {
   data: Contato[]
+  isLoading?: boolean
   onSelectContato?: (contato: Contato) => void
   onEditContato?: (contato: Contato) => void
+  selectedIds?: string[]
+  onSelectionChange?: (ids: string[]) => void
+  onBulkStatusUpdate?: (ids: string[], status: Contato['status']) => Promise<void>
+  onBulkFavoriteToggle?: (ids: string[], favorite: boolean) => Promise<void>
+  onBulkTagAssignment?: (ids: string[], tags: string[]) => Promise<void>
+  onBulkExport?: (ids: string[], options: any) => Promise<void>
+  onBulkDelete?: (ids: string[]) => Promise<void>
+  availableTags?: string[]
 }
 
 // Status badge component
@@ -195,9 +207,43 @@ function ContatoCard({ contato, onSelect, onEdit }: {
   )
 }
 
-export function ContatosTable({ data, onSelectContato, onEditContato }: ContatosTableProps) {
+export function ContatosTable({ 
+  data, 
+  isLoading = false, 
+  onSelectContato, 
+  onEditContato,
+  selectedIds = [],
+  onSelectionChange,
+  onBulkStatusUpdate,
+  onBulkFavoriteToggle,
+  onBulkTagAssignment,
+  onBulkExport,
+  onBulkDelete,
+  availableTags = []
+}: ContatosTableProps) {
   const isMobile = useIsMobile()
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState<Record<string, boolean>>(() => {
+    const selection: Record<string, boolean> = {}
+    selectedIds.forEach(id => {
+      selection[id] = true
+    })
+    return selection
+  })
+
+  // Update row selection when selectedIds prop changes
+  React.useEffect(() => {
+    const selection: Record<string, boolean> = {}
+    selectedIds.forEach(id => {
+      selection[id] = true
+    })
+    setRowSelection(selection)
+  }, [selectedIds])
+
+  // Notify parent of selection changes
+  React.useEffect(() => {
+    const selectedRowIds = Object.keys(rowSelection).filter(id => rowSelection[id])
+    onSelectionChange?.(selectedRowIds)
+  }, [rowSelection, onSelectionChange])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
     // Hide less important columns on mobile by default
     areaInteresse: !isMobile,
@@ -212,6 +258,79 @@ export function ContatosTable({ data, onSelectContato, onEditContato }: Contatos
     pageIndex: 0,
     pageSize: isMobile ? 5 : 10, // Smaller page size on mobile
   })
+
+  // Bulk operations state
+  const [showTagDialog, setShowTagDialog] = React.useState(false)
+  const [showExportDialog, setShowExportDialog] = React.useState(false)
+  const [bulkLoading, setBulkLoading] = React.useState(false)
+
+  // Get selected items data
+  const selectedItems = React.useMemo(() => {
+    return data.filter(item => selectedIds.includes(item.id))
+  }, [data, selectedIds])
+
+  // Bulk operation handlers
+  const handleBulkStatusUpdate = async (status: Contato['status']) => {
+    if (!onBulkStatusUpdate || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkStatusUpdate(selectedIds, status)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkFavoriteToggle = async (favorite: boolean) => {
+    if (!onBulkFavoriteToggle || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkFavoriteToggle(selectedIds, favorite)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkTagAssignment = async (tags: string[]) => {
+    if (!onBulkTagAssignment || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkTagAssignment(selectedIds, tags)
+      setShowTagDialog(false)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkExport = async (options: any) => {
+    if (!onBulkExport || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkExport(selectedIds, options)
+      setShowExportDialog(false)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkDelete = async () => {
+    if (!onBulkDelete || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkDelete(selectedIds)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleClearSelection = () => {
+    setRowSelection({})
+    onSelectionChange?.([])
+  }
 
   const columns: ColumnDef<Contato>[] = React.useMemo(() => [
     {
@@ -414,6 +533,18 @@ export function ContatosTable({ data, onSelectContato, onEditContato }: Contatos
 
   return (
     <div className="space-y-4">
+      {/* Bulk Actions Toolbar */}
+      <BulkActionsToolbar
+        selectedItems={selectedItems}
+        onClearSelection={handleClearSelection}
+        onBulkStatusUpdate={handleBulkStatusUpdate}
+        onBulkFavoriteToggle={handleBulkFavoriteToggle}
+        onBulkTagAssignment={() => setShowTagDialog(true)}
+        onBulkExport={() => setShowExportDialog(true)}
+        onBulkDelete={handleBulkDelete}
+        isLoading={bulkLoading}
+      />
+
       {/* Table controls */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center space-x-2">
@@ -467,7 +598,32 @@ export function ContatosTable({ data, onSelectContato, onEditContato }: Contatos
       {/* Mobile Card View */}
       {isMobile ? (
         <div className="space-y-3">
-          {table.getRowModel().rows?.length ? (
+          {isLoading ? (
+            // Loading skeleton for mobile cards
+            Array.from({ length: 3 }).map((_, i) => (
+              <Card key={i} className="animate-pulse">
+                <CardHeader className="pb-2">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-muted rounded w-1/2"></div>
+                    </div>
+                    <div className="h-6 w-6 bg-muted rounded"></div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <div className="flex gap-2 mb-3">
+                    <div className="h-5 bg-muted rounded w-16"></div>
+                    <div className="h-5 bg-muted rounded w-20"></div>
+                  </div>
+                  <div className="flex justify-between">
+                    <div className="h-3 bg-muted rounded w-24"></div>
+                    <div className="h-3 bg-muted rounded w-16"></div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          ) : table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <ContatoCard
                 key={row.id}
@@ -506,7 +662,43 @@ export function ContatosTable({ data, onSelectContato, onEditContato }: Contatos
                 ))}
               </TableHeader>
               <TableBody>
-                {table.getRowModel().rows?.length ? (
+                {isLoading ? (
+                  // Loading skeleton for table rows
+                  Array.from({ length: 5 }).map((_, i) => (
+                    <TableRow key={i} className="animate-pulse">
+                      <TableCell>
+                        <div className="h-4 w-4 bg-muted rounded"></div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="space-y-2">
+                          <div className="h-4 bg-muted rounded w-3/4"></div>
+                          <div className="h-3 bg-muted rounded w-1/2"></div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="h-5 bg-muted rounded w-16"></div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="h-5 bg-muted rounded w-20"></div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="h-5 bg-muted rounded w-24"></div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="h-3 bg-muted rounded w-20"></div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="h-5 bg-muted rounded w-16"></div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="h-5 bg-muted rounded w-20"></div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="h-6 w-6 bg-muted rounded"></div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
                     <TableRow
                       key={row.id}
@@ -611,6 +803,25 @@ export function ContatosTable({ data, onSelectContato, onEditContato }: Contatos
           </div>
         </div>
       </div>
+
+      {/* Tag Management Dialog */}
+      <TagManagementDialog
+        open={showTagDialog}
+        onOpenChange={setShowTagDialog}
+        selectedItems={selectedItems}
+        availableTags={availableTags}
+        onApplyTags={handleBulkTagAssignment}
+        isLoading={bulkLoading}
+      />
+
+      {/* Bulk Export Dialog */}
+      <BulkExportDialog
+        open={showExportDialog}
+        onOpenChange={setShowExportDialog}
+        selectedItems={selectedItems}
+        onExport={handleBulkExport}
+        isLoading={bulkLoading}
+      />
     </div>
   )
 }

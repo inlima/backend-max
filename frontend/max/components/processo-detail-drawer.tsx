@@ -1,65 +1,63 @@
 "use client"
 
 import * as React from "react"
-import { formatDistanceToNow, format } from "date-fns"
-import { ptBR } from "date-fns/locale"
 import {
-  IconX,
-  IconPhone,
-  IconClock,
-  IconUser,
-  IconBrandWhatsapp,
-  IconEdit,
-  IconCalendar,
-  IconFileDescription,
-  IconCheck,
-  IconArrowRight,
-  IconAlertTriangle,
-  IconDownload,
-  IconEye,
-  IconHistory,
-  IconScale,
-} from "@tabler/icons-react"
-
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
-import { Processo, ConversaMessage } from "@/types"
-import { useConversaMessages } from "@/hooks/use-api"
+import { 
+  IconFileDescription, 
+  IconEdit, 
+  IconCalendar, 
+  IconUser, 
+  IconPhone,
+  IconClock,
+  IconAlertTriangle,
+  IconFileText,
+  IconNotes,
+  IconHistory,
+  IconUpload
+} from "@tabler/icons-react"
+import { DocumentUpload } from "@/components/document-upload"
+import { format, formatDistanceToNow } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { Processo } from "@/types"
 
 interface ProcessoDetailDrawerProps {
-  processo: Processo | null
+  processo: Processo
   open: boolean
-  onClose: () => void
-  onEdit?: (processo: Processo) => void
+  onOpenChange: (open: boolean) => void
+  isEditMode?: boolean
+  onSuccess?: () => void
 }
 
 // Status badge component
 function StatusBadge({ status }: { status: Processo['status'] }) {
   const variants = {
-    novo: { color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" },
-    em_andamento: { color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300" },
-    aguardando_cliente: { color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300" },
-    finalizado: { color: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" },
-    arquivado: { color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400" },
+    novo: { variant: "default" as const, color: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" },
+    em_andamento: { variant: "default" as const, color: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300" },
+    aguardando_cliente: { variant: "default" as const, color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300" },
+    finalizado: { variant: "outline" as const, color: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" },
+    arquivado: { variant: "secondary" as const, color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400" },
   }
 
   const config = variants[status] || variants.novo
 
   return (
-    <Badge className={config.color}>
+    <Badge variant={config.variant} className={config.color}>
       {status === 'novo' && 'Novo'}
       {status === 'em_andamento' && 'Em Andamento'}
       {status === 'aguardando_cliente' && 'Aguardando Cliente'}
@@ -72,16 +70,16 @@ function StatusBadge({ status }: { status: Processo['status'] }) {
 // Prioridade badge component
 function PrioridadeBadge({ prioridade }: { prioridade: Processo['prioridade'] }) {
   const variants = {
-    baixa: { color: "text-green-700 border-green-300" },
-    media: { color: "text-blue-700 border-blue-300" },
-    alta: { color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300" },
-    urgente: { color: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300" },
+    baixa: { variant: "outline" as const, color: "text-green-700 border-green-300" },
+    media: { variant: "outline" as const, color: "text-blue-700 border-blue-300" },
+    alta: { variant: "default" as const, color: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300" },
+    urgente: { variant: "destructive" as const, color: "" },
   }
 
   const config = variants[prioridade] || variants.media
 
   return (
-    <Badge variant="outline" className={config.color}>
+    <Badge variant={config.variant} className={config.color}>
       {prioridade === 'urgente' && <IconAlertTriangle className="w-3 h-3 mr-1" />}
       {prioridade === 'baixa' && 'Baixa'}
       {prioridade === 'media' && 'Média'}
@@ -105,8 +103,10 @@ function PrazoIndicator({ prazoLimite }: { prazoLimite?: Date }) {
   if (diffDays < 0) {
     variant = "destructive"
   } else if (diffDays <= 3) {
+    variant = "default"
     color = "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300"
   } else if (diffDays <= 7) {
+    variant = "default"
     color = "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
   } else {
     variant = "secondary"
@@ -120,345 +120,314 @@ function PrazoIndicator({ prazoLimite }: { prazoLimite?: Date }) {
   )
 }
 
-// Document item component
-function DocumentItem({ documento }: { documento: Processo['documentos'][0] }) {
-  return (
-    <div className="flex items-center justify-between p-3 border rounded-lg">
-      <div className="flex items-center gap-3">
-        <IconFileDescription className="w-4 h-4 text-muted-foreground" />
-        <div>
-          <p className="font-medium text-sm">{documento.nome}</p>
-          <p className="text-xs text-muted-foreground">
-            {documento.tipo} • {format(new Date(documento.uploadedAt), 'dd/MM/yyyy', { locale: ptBR })} • {documento.uploadedBy}
-          </p>
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm">
-          <IconEye className="w-4 h-4" />
-        </Button>
-        <Button variant="ghost" size="sm">
-          <IconDownload className="w-4 h-4" />
-        </Button>
-      </div>
-    </div>
-  )
-}
-
-// History item component
-function HistoryItem({ item }: { item: Processo['historico'][0] }) {
-  return (
-    <div className="flex gap-3 pb-3">
-      <div className="flex-shrink-0 w-2 h-2 bg-primary rounded-full mt-2"></div>
-      <div className="flex-1 space-y-1">
-        <div className="flex items-center justify-between">
-          <p className="font-medium text-sm">{item.acao}</p>
-          <p className="text-xs text-muted-foreground">
-            {format(new Date(item.timestamp), 'dd/MM HH:mm', { locale: ptBR })}
-          </p>
-        </div>
-        <p className="text-sm text-muted-foreground">{item.descricao}</p>
-        <p className="text-xs text-muted-foreground">por {item.usuario}</p>
-      </div>
-    </div>
-  )
-}
-
-// Message component for WhatsApp interactions
-function MessageBubble({ message }: { message: ConversaMessage }) {
-  const isInbound = message.direction === 'inbound'
-  
-  return (
-    <div className={`flex ${isInbound ? 'justify-start' : 'justify-end'} mb-4`}>
-      <div
-        className={`max-w-[80%] rounded-lg px-4 py-2 ${
-          isInbound
-            ? 'bg-muted text-foreground'
-            : 'bg-primary text-primary-foreground'
-        }`}
-      >
-        <p className="text-sm">{message.content}</p>
-        <p className={`text-xs mt-1 ${
-          isInbound ? 'text-muted-foreground' : 'text-primary-foreground/70'
-        }`}>
-          {format(new Date(message.timestamp), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
-        </p>
-      </div>
-    </div>
-  )
-}
-
-export function ProcessoDetailDrawer({ 
-  processo, 
-  open, 
-  onClose, 
-  onEdit 
+export function ProcessoDetailDrawer({
+  processo,
+  open,
+  onOpenChange,
+  isEditMode = false,
+  onSuccess,
 }: ProcessoDetailDrawerProps) {
-  // Fetch WhatsApp messages related to this process (via contact)
-  const { 
-    data: messages, 
-    error: messagesError, 
-    isLoading: messagesLoading 
-  } = useConversaMessages(processo?.contatoId || null)
-
-  if (!processo) return null
+  const dataAbertura = new Date(processo.dataAbertura)
+  const dataUltimaAtualizacao = new Date(processo.dataUltimaAtualizacao)
 
   return (
-    <Drawer open={open} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent className="max-h-[90vh]">
-        <DrawerHeader className="pb-4">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
+        <SheetHeader>
           <div className="flex items-start justify-between">
-            <div className="space-y-2">
-              <DrawerTitle className="text-xl">{processo.titulo}</DrawerTitle>
-              <DrawerDescription className="flex items-center gap-2 flex-wrap">
-                <StatusBadge status={processo.status} />
-                <PrioridadeBadge prioridade={processo.prioridade} />
-                <Badge variant="outline" className={processo.origem === 'whatsapp' ? 'text-green-700 border-green-300' : 'text-blue-700 border-blue-300'}>
-                  {processo.origem === 'whatsapp' ? (
-                    <>
-                      <IconBrandWhatsapp className="w-3 h-3 mr-1" />
-                      WhatsApp
-                    </>
-                  ) : (
-                    <>
-                      <IconUser className="w-3 h-3 mr-1" />
-                      Manual
-                    </>
-                  )}
-                </Badge>
-                <PrazoIndicator prazoLimite={processo.prazoLimite} />
-              </DrawerDescription>
-            </div>
-            <div className="flex items-center gap-2">
-              {onEdit && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onEdit(processo)}
-                >
-                  <IconEdit className="w-4 h-4 mr-2" />
-                  Editar
-                </Button>
+            <div className="flex-1 min-w-0">
+              <SheetTitle className="flex items-center gap-2">
+                <IconFileDescription className="h-5 w-5" />
+                {processo.titulo}
+              </SheetTitle>
+              {processo.numero && (
+                <SheetDescription>
+                  Processo nº {processo.numero}
+                </SheetDescription>
               )}
-              <DrawerClose asChild>
-                <Button variant="outline" size="sm">
-                  <IconX className="w-4 h-4" />
-                </Button>
-              </DrawerClose>
             </div>
+            <Button variant="outline" size="sm">
+              <IconEdit className="h-4 w-4 mr-2" />
+              Editar
+            </Button>
           </div>
-        </DrawerHeader>
+        </SheetHeader>
 
-        <div className="flex-1 overflow-hidden px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
-            {/* Process Information */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Basic Info */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <IconScale className="w-5 h-5" />
-                    Informações do Processo
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {processo.numero && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Número do Processo:</span>
-                      <Badge variant="outline">{processo.numero}</Badge>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Área Jurídica:</span>
-                    <Badge variant="outline">{processo.areaJuridica}</Badge>
-                  </div>
-                  {processo.advogadoResponsavel && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Advogado Responsável:</span>
-                      <span>{processo.advogadoResponsavel}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Data de Abertura:</span>
-                    <span>{format(new Date(processo.dataAbertura), 'dd/MM/yyyy', { locale: ptBR })}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Última Atualização:</span>
-                    <span>
-                      {formatDistanceToNow(new Date(processo.dataUltimaAtualizacao), { 
-                        addSuffix: true, 
-                        locale: ptBR 
-                      })}
-                    </span>
-                  </div>
-                  {processo.prazoLimite && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Prazo Limite:</span>
-                      <span>{format(new Date(processo.prazoLimite), 'dd/MM/yyyy', { locale: ptBR })}</span>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+        <div className="mt-6 space-y-6">
+          {/* Status and Priority */}
+          <div className="flex flex-wrap gap-2">
+            <StatusBadge status={processo.status} />
+            <PrioridadeBadge prioridade={processo.prioridade} />
+            {processo.prazoLimite && <PrazoIndicator prazoLimite={processo.prazoLimite} />}
+            <Badge variant="outline">{processo.areaJuridica}</Badge>
+          </div>
 
-              {/* Client Information */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <IconUser className="w-5 h-5" />
-                    Informações do Cliente
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <IconUser className="w-4 h-4 text-muted-foreground" />
-                    <span className="font-medium">{processo.contato.nome}</span>
+          {/* Basic Info */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Informações Básicas</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Cliente</label>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <IconUser className="h-4 w-4 text-muted-foreground" />
+                    <span>{processo.contato.nome}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <IconPhone className="w-4 h-4 text-muted-foreground" />
-                    <span>{processo.contato.telefone}</span>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <IconPhone className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">{processo.contato.telefone}</span>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Description */}
+                </div>
+                
+                {processo.advogadoResponsavel && (
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Advogado Responsável</label>
+                    <p className="mt-1">{processo.advogadoResponsavel}</p>
+                  </div>
+                )}
+                
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Data de Abertura</label>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <IconCalendar className="h-4 w-4 text-muted-foreground" />
+                    <span>{format(dataAbertura, "dd/MM/yyyy", { locale: ptBR })}</span>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Última Atualização</label>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <IconClock className="h-4 w-4 text-muted-foreground" />
+                    <span>{formatDistanceToNow(dataUltimaAtualizacao, { addSuffix: true, locale: ptBR })}</span>
+                  </div>
+                </div>
+              </div>
+              
               {processo.descricao && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Descrição</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">{processo.descricao}</p>
-                  </CardContent>
-                </Card>
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground">Descrição</label>
+                  <p className="mt-1 text-sm">{processo.descricao}</p>
+                </div>
               )}
+            </CardContent>
+          </Card>
 
-              {/* Observations */}
-              {processo.observacoes && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Observações</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">{processo.observacoes}</p>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Documents */}
+          {/* Tabs for detailed information */}
+          <Tabs defaultValue="timeline" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="timeline">Timeline</TabsTrigger>
+              <TabsTrigger value="documentos">Documentos</TabsTrigger>
+              <TabsTrigger value="prazos">Prazos</TabsTrigger>
+              <TabsTrigger value="anotacoes">Anotações</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="timeline" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    <span className="flex items-center gap-2">
-                      <IconFileDescription className="w-5 h-5" />
-                      Documentos ({processo.documentos.length})
-                    </span>
-                    <Button variant="outline" size="sm">
-                      <IconFileDescription className="w-4 h-4 mr-2" />
-                      Adicionar
-                    </Button>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {processo.documentos.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-4">
-                      Nenhum documento anexado
-                    </p>
-                  ) : (
-                    <div className="space-y-3">
-                      {processo.documentos.map((documento) => (
-                        <DocumentItem key={documento.id} documento={documento} />
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Right Column - History and WhatsApp */}
-            <div className="space-y-6 h-full flex flex-col">
-              {/* Process History */}
-              <Card className="flex-1">
-                <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <IconHistory className="w-5 h-5" />
-                    Histórico ({processo.historico.length})
+                    <IconHistory className="h-5 w-5" />
+                    Timeline do Processo
                   </CardTitle>
+                  <CardDescription>
+                    Histórico completo de eventos e atualizações
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {processo.historico.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-4">
-                      Nenhum histórico disponível
-                    </p>
-                  ) : (
-                    <div className="space-y-4 max-h-64 overflow-y-auto">
-                      {processo.historico
-                        .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-                        .map((item) => (
-                          <HistoryItem key={item.id} item={item} />
-                        ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* WhatsApp Interactions */}
-              <Card className="flex-1">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <IconBrandWhatsapp className="w-5 h-5" />
-                    Interações WhatsApp
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {messagesLoading ? (
-                    <div className="space-y-4">
-                      {[...Array(3)].map((_, i) => (
-                        <div key={i} className="space-y-2">
-                          <Skeleton className="h-4 w-20" />
-                          <Skeleton className="h-16 w-full" />
-                        </div>
-                      ))}
-                    </div>
-                  ) : messagesError ? (
-                    <div className="text-center py-8">
-                      <p className="text-muted-foreground text-sm">
-                        Erro ao carregar mensagens
-                      </p>
-                    </div>
-                  ) : !messages || messages.length === 0 ? (
-                    <div className="text-center py-8">
-                      <p className="text-muted-foreground text-sm">
-                        Nenhuma interação via WhatsApp
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="max-h-64 overflow-y-auto">
-                      <div className="space-y-2">
-                        {messages
-                          .slice(-10) // Show last 10 messages
-                          .map((message) => (
-                            <MessageBubble key={message.id} message={message} />
-                          ))}
+                  <div className="space-y-6">
+                    {processo.historico.length > 0 ? (
+                      <div className="relative">
+                        {/* Timeline line */}
+                        <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                        
+                        {processo.historico.map((evento, index) => {
+                          const isLast = index === processo.historico.length - 1
+                          return (
+                            <div key={evento.id} className="relative flex space-x-4 pb-6">
+                              {/* Timeline dot */}
+                              <div className="flex-shrink-0 relative">
+                                <div className="w-8 h-8 bg-background border-2 border-primary rounded-full flex items-center justify-center">
+                                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                                </div>
+                              </div>
+                              
+                              {/* Event content */}
+                              <div className="flex-1 min-w-0 pb-4">
+                                <div className="bg-muted/50 rounded-lg p-4">
+                                  <div className="flex items-start justify-between mb-2">
+                                    <h4 className="text-sm font-medium">{evento.acao}</h4>
+                                    <time className="text-xs text-muted-foreground">
+                                      {format(new Date(evento.timestamp), "dd/MM/yyyy HH:mm", { locale: ptBR })}
+                                    </time>
+                                  </div>
+                                  <p className="text-sm text-muted-foreground mb-2">{evento.descricao}</p>
+                                  <div className="flex items-center space-x-2">
+                                    <IconUser className="h-3 w-3 text-muted-foreground" />
+                                    <span className="text-xs text-muted-foreground">{evento.usuario}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })}
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="text-center py-12">
+                        <IconHistory className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <h3 className="text-lg font-medium mb-2">Timeline vazio</h3>
+                        <p className="text-muted-foreground mb-4">
+                          Nenhum evento foi registrado ainda para este processo
+                        </p>
+                        <Button variant="outline">
+                          <IconHistory className="h-4 w-4 mr-2" />
+                          Adicionar Evento
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
-            </div>
-          </div>
+            </TabsContent>
+            
+            <TabsContent value="documentos" className="space-y-4">
+              <DocumentUpload
+                processoId={processo.id}
+                existingDocuments={processo.documentos.map(doc => ({
+                  id: doc.id,
+                  file: new File([], doc.nome),
+                  name: doc.nome,
+                  size: 0,
+                  type: doc.tipo,
+                  category: 'outros',
+                  tags: [],
+                  uploadProgress: 100,
+                  uploaded: true,
+                  url: doc.url,
+                  uploadedAt: new Date(doc.uploadedAt),
+                  uploadedBy: doc.uploadedBy
+                }))}
+                onUpload={(files) => {
+                  console.log('Files uploaded:', files)
+                  // Handle file upload
+                }}
+                onDelete={(documentId) => {
+                  console.log('Document deleted:', documentId)
+                  // Handle file deletion
+                }}
+              />
+            </TabsContent>
+            
+            <TabsContent value="prazos" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <IconCalendar className="h-5 w-5" />
+                    Prazos e Deadlines
+                  </CardTitle>
+                  <CardDescription>
+                    Gerenciamento de prazos processuais
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {processo.prazoLimite ? (
+                      <div className="p-3 border rounded-lg">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-medium">Prazo Principal</p>
+                            <p className="text-sm text-muted-foreground">
+                              {format(new Date(processo.prazoLimite), "dd/MM/yyyy", { locale: ptBR })}
+                            </p>
+                          </div>
+                          <PrazoIndicator prazoLimite={processo.prazoLimite} />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <IconCalendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <p className="text-muted-foreground">Nenhum prazo definido</p>
+                        <Button variant="outline" className="mt-4">
+                          Adicionar Prazo
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            <TabsContent value="anotacoes" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        <IconNotes className="h-5 w-5" />
+                        Anotações
+                      </CardTitle>
+                      <CardDescription>
+                        Notas e observações sobre o processo
+                      </CardDescription>
+                    </div>
+                    <Button variant="outline" size="sm">
+                      <IconNotes className="h-4 w-4 mr-2" />
+                      Nova Anotação
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {processo.observacoes ? (
+                      <div className="space-y-4">
+                        {/* Main observation */}
+                        <div className="p-4 bg-muted/50 rounded-lg border-l-4 border-primary">
+                          <div className="flex items-start justify-between mb-2">
+                            <h4 className="text-sm font-medium">Observação Principal</h4>
+                            <time className="text-xs text-muted-foreground">
+                              {format(dataAbertura, "dd/MM/yyyy HH:mm", { locale: ptBR })}
+                            </time>
+                          </div>
+                          <p className="text-sm text-muted-foreground">{processo.observacoes}</p>
+                          <div className="flex items-center space-x-2 mt-2">
+                            <IconUser className="h-3 w-3 text-muted-foreground" />
+                            <span className="text-xs text-muted-foreground">
+                              {processo.advogadoResponsavel || 'Sistema'}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        {/* Additional notes placeholder */}
+                        <div className="text-center py-6 border-2 border-dashed border-muted rounded-lg">
+                          <IconNotes className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Adicione mais anotações para acompanhar o progresso
+                          </p>
+                          <Button variant="outline" size="sm">
+                            Adicionar Anotação
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center py-12 border-2 border-dashed border-muted rounded-lg">
+                        <IconNotes className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <h3 className="text-lg font-medium mb-2">Nenhuma anotação registrada</h3>
+                        <p className="text-muted-foreground mb-4">
+                          Adicione anotações para acompanhar o desenvolvimento do processo
+                        </p>
+                        <Button variant="outline">
+                          <IconNotes className="h-4 w-4 mr-2" />
+                          Primeira Anotação
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
-
-        <DrawerFooter className="pt-4">
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-muted-foreground">
-              ID: {processo.id}
-            </div>
-            <DrawerClose asChild>
-              <Button variant="outline">Fechar</Button>
-            </DrawerClose>
-          </div>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   )
 }

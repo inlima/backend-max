@@ -32,15 +32,21 @@ import {
 } from "@/components/ui/drawer"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { Contato, ConversaMessage } from "@/types"
-import { useConversaMessages } from "@/hooks/use-api"
+import { Contato, ConversaMessage, Processo, TimelineEvent } from "@/types"
+import { useUpdateContato, useContatoConversations, useContatoProcesses } from "@/hooks/use-react-query"
+import { toast } from "sonner"
 
 interface ContatoDetailDrawerProps {
   contato: Contato | null
   open: boolean
-  onClose: () => void
-  onEdit?: (contato: Contato) => void
+  onOpenChange: (open: boolean) => void
+  onContatoUpdated?: () => void
 }
 
 // Status badge component
@@ -147,20 +153,102 @@ function CollectedDataSection({ dadosColetados }: { dadosColetados: Contato['dad
 export function ContatoDetailDrawer({ 
   contato, 
   open, 
-  onClose, 
-  onEdit 
+  onOpenChange, 
+  onContatoUpdated 
 }: ContatoDetailDrawerProps) {
+  const [activeTab, setActiveTab] = React.useState("informacoes")
+  const [isEditing, setIsEditing] = React.useState(false)
+  const [editData, setEditData] = React.useState<Partial<Contato>>({})
+
   // Fetch conversation messages
   const { 
     data: messages, 
     error: messagesError, 
     isLoading: messagesLoading 
-  } = useConversaMessages(contato?.id || null)
+  } = useContatoConversations(contato?.id || '')
+
+  // Fetch related processes
+  const { 
+    data: processos, 
+    error: processosError, 
+    isLoading: processosLoading 
+  } = useContatoProcesses(contato?.id || "")
+
+  // Update contato mutation
+  const { trigger: updateContato, isMutating: isUpdating } = useUpdateContato()
+
+  // Initialize edit data when contato changes
+  React.useEffect(() => {
+    if (contato) {
+      setEditData({
+        nome: contato.nome,
+        telefone: contato.telefone,
+        email: contato.email || "",
+        areaInteresse: contato.areaInteresse || "",
+        status: contato.status,
+      })
+    }
+  }, [contato])
+
+  const handleSaveEdit = async () => {
+    if (!contato) return
+
+    try {
+      await updateContato({ id: contato.id, ...editData })
+      setIsEditing(false)
+      onContatoUpdated?.()
+      toast.success("Contato atualizado com sucesso!")
+    } catch (error) {
+      toast.error("Erro ao atualizar contato")
+    }
+  }
+
+  const handleCancelEdit = () => {
+    setIsEditing(false)
+    if (contato) {
+      setEditData({
+        nome: contato.nome,
+        telefone: contato.telefone,
+        email: contato.email || "",
+        areaInteresse: contato.areaInteresse || "",
+        status: contato.status,
+      })
+    }
+  }
+
+  // Generate mock timeline events
+  const timelineEvents: TimelineEvent[] = React.useMemo(() => {
+    if (!contato) return []
+    
+    const events: TimelineEvent[] = [
+      {
+        id: "1",
+        tipo: "criacao",
+        titulo: "Contato criado",
+        descricao: `Contato ${contato.nome} foi criado no sistema`,
+        usuario: "Sistema",
+        timestamp: new Date(contato.primeiroContato),
+      }
+    ]
+
+    if (contato.ultimaInteracao !== contato.primeiroContato) {
+      events.push({
+        id: "2",
+        tipo: "atualizacao",
+        titulo: "Última interação",
+        descricao: "Última atividade registrada",
+        usuario: contato.atendente || "Sistema",
+        timestamp: new Date(contato.ultimaInteracao),
+      })
+    }
+
+    return events.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+  }, [contato])
 
   if (!contato) return null
 
   return (
-    <Drawer open={open} onOpenChange={(open) => !open && onClose()}>
+    <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="max-h-[90vh]">
         <DrawerHeader className="pb-4">
           <div className="flex items-start justify-between">
@@ -189,11 +277,29 @@ export function ContatoDetailDrawer({
               </DrawerDescription>
             </div>
             <div className="flex items-center gap-2">
-              {onEdit && (
+              {isEditing ? (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCancelEdit}
+                    disabled={isUpdating}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={handleSaveEdit}
+                    disabled={isUpdating}
+                  >
+                    {isUpdating ? "Salvando..." : "Salvar"}
+                  </Button>
+                </>
+              ) : (
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => onEdit(contato)}
+                  onClick={() => setIsEditing(true)}
                 >
                   <IconEdit className="w-4 h-4 mr-2" />
                   Editar
@@ -209,143 +315,301 @@ export function ContatoDetailDrawer({
         </DrawerHeader>
 
         <div className="flex-1 overflow-hidden px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
-            {/* Contact Information */}
-            <div className="space-y-6">
-              {/* Basic Info */}
-              <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Informações de Contato</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <IconPhone className="w-4 h-4 text-muted-foreground" />
-                    <span>{contato.telefone}</span>
-                  </div>
-                  {contato.email && (
-                    <div className="flex items-center gap-3">
-                      <IconMail className="w-4 h-4 text-muted-foreground" />
-                      <span>{contato.email}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-3">
-                    <IconCalendar className="w-4 h-4 text-muted-foreground" />
-                    <span>
-                      Primeiro contato: {format(new Date(contato.primeiroContato), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <IconClock className="w-4 h-4 text-muted-foreground" />
-                    <span>
-                      Última interação: {formatDistanceToNow(new Date(contato.ultimaInteracao), { 
-                        addSuffix: true, 
-                        locale: ptBR 
-                      })}
-                    </span>
-                  </div>
-                </div>
-              </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="informacoes">Informações</TabsTrigger>
+              <TabsTrigger value="conversas">Conversas</TabsTrigger>
+              <TabsTrigger value="processos">Processos</TabsTrigger>
+              <TabsTrigger value="timeline">Timeline</TabsTrigger>
+            </TabsList>
 
-              <Separator />
-
-              {/* Additional Info */}
-              <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Detalhes do Atendimento</h3>
-                <div className="space-y-3">
-                  {contato.areaInteresse && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Área de Interesse:</span>
-                      <Badge variant="outline">{contato.areaInteresse}</Badge>
-                    </div>
-                  )}
-                  {contato.tipoSolicitacao && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Tipo de Solicitação:</span>
-                      <Badge variant="outline">
-                        {contato.tipoSolicitacao === 'agendamento' && 'Agendamento'}
-                        {contato.tipoSolicitacao === 'consulta' && 'Consulta'}
-                        {contato.tipoSolicitacao === 'informacao' && 'Informação'}
-                      </Badge>
-                    </div>
-                  )}
-                  {contato.preferenciaAtendimento && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Preferência de Atendimento:</span>
-                      <Badge variant="outline">
-                        {contato.preferenciaAtendimento === 'presencial' ? 'Presencial' : 'Online'}
-                      </Badge>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Conversa Completa:</span>
-                    <Badge variant={contato.conversaCompleta ? "default" : "secondary"}>
-                      {contato.conversaCompleta ? (
+            <div className="flex-1 mt-4 overflow-hidden">
+              <TabsContent value="informacoes" className="h-full overflow-y-auto">
+                <div className="space-y-6">
+                  {/* Basic Information */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Informações Básicas</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {isEditing ? (
                         <>
-                          <IconCheck className="w-3 h-3 mr-1" />
-                          Sim
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-nome">Nome</Label>
+                              <Input
+                                id="edit-nome"
+                                value={editData.nome || ""}
+                                onChange={(e) => setEditData({ ...editData, nome: e.target.value })}
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="edit-telefone">Telefone</Label>
+                              <Input
+                                id="edit-telefone"
+                                value={editData.telefone || ""}
+                                onChange={(e) => setEditData({ ...editData, telefone: e.target.value })}
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="edit-email">Email</Label>
+                            <Input
+                              id="edit-email"
+                              type="email"
+                              value={editData.email || ""}
+                              onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="edit-area">Área de Interesse</Label>
+                            <Input
+                              id="edit-area"
+                              value={editData.areaInteresse || ""}
+                              onChange={(e) => setEditData({ ...editData, areaInteresse: e.target.value })}
+                            />
+                          </div>
                         </>
                       ) : (
-                        'Em andamento'
+                        <>
+                          <div className="flex items-center gap-3">
+                            <IconPhone className="w-4 h-4 text-muted-foreground" />
+                            <span>{contato.telefone}</span>
+                          </div>
+                          {contato.email && (
+                            <div className="flex items-center gap-3">
+                              <IconMail className="w-4 h-4 text-muted-foreground" />
+                              <span>{contato.email}</span>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-3">
+                            <IconCalendar className="w-4 h-4 text-muted-foreground" />
+                            <span>
+                              Primeiro contato: {format(new Date(contato.primeiroContato), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <IconClock className="w-4 h-4 text-muted-foreground" />
+                            <span>
+                              Última interação: {formatDistanceToNow(new Date(contato.ultimaInteracao), { 
+                                addSuffix: true, 
+                                locale: ptBR 
+                              })}
+                            </span>
+                          </div>
+                        </>
                       )}
-                    </Badge>
-                  </div>
-                  {contato.atendente && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Atendente:</span>
-                      <span>{contato.atendente}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
+                    </CardContent>
+                  </Card>
 
-              <Separator />
-
-              {/* Collected Data */}
-              <CollectedDataSection dadosColetados={contato.dadosColetados} />
-            </div>
-
-            {/* Conversation History */}
-            <div className="space-y-4 h-full flex flex-col">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-lg">Histórico de Conversa</h3>
-                <Badge variant="outline">
-                  <IconMessageCircle className="w-3 h-3 mr-1" />
-                  {messages?.length || 0} mensagens
-                </Badge>
-              </div>
-
-              <div className="flex-1 min-h-0">
-                {messagesLoading ? (
-                  <div className="space-y-4">
-                    {[...Array(3)].map((_, i) => (
-                      <div key={i} className="space-y-2">
-                        <Skeleton className="h-4 w-20" />
-                        <Skeleton className="h-16 w-full" />
+                  {/* Service Details */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Detalhes do Atendimento</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {contato.areaInteresse && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">Área de Interesse:</span>
+                          <Badge variant="outline">{contato.areaInteresse}</Badge>
+                        </div>
+                      )}
+                      {contato.tipoSolicitacao && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">Tipo de Solicitação:</span>
+                          <Badge variant="outline">
+                            {contato.tipoSolicitacao === 'agendamento' && 'Agendamento'}
+                            {contato.tipoSolicitacao === 'consulta' && 'Consulta'}
+                            {contato.tipoSolicitacao === 'informacao' && 'Informação'}
+                          </Badge>
+                        </div>
+                      )}
+                      {contato.preferenciaAtendimento && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">Preferência de Atendimento:</span>
+                          <Badge variant="outline">
+                            {contato.preferenciaAtendimento === 'presencial' ? 'Presencial' : 'Online'}
+                          </Badge>
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Conversa Completa:</span>
+                        <Badge variant={contato.conversaCompleta ? "default" : "secondary"}>
+                          {contato.conversaCompleta ? (
+                            <>
+                              <IconCheck className="w-3 h-3 mr-1" />
+                              Sim
+                            </>
+                          ) : (
+                            'Em andamento'
+                          )}
+                        </Badge>
                       </div>
-                    ))}
-                  </div>
-                ) : messagesError ? (
-                  <div className="text-center py-8">
-                    <p className="text-muted-foreground">
-                      Erro ao carregar mensagens
-                    </p>
-                  </div>
-                ) : !messages || messages.length === 0 ? (
-                  <div className="text-center py-8">
-                    <p className="text-muted-foreground">
-                      Nenhuma mensagem encontrada
-                    </p>
-                  </div>
-                ) : (
-                  <div className="h-full overflow-y-auto pr-4">
-                    <div className="space-y-2">
-                      {messages.map((message) => (
-                        <MessageBubble key={message.id} message={message} />
+                      {contato.atendente && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">Atendente:</span>
+                          <span>{contato.atendente}</span>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  {/* Collected Data */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Dados Coletados pelo Bot</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CollectedDataSection dadosColetados={contato.dadosColetados} />
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="conversas" className="h-full overflow-hidden">
+                <Card className="h-full flex flex-col">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <IconMessageCircle className="w-5 h-5" />
+                      Histórico de Conversas
+                      <Badge variant="outline">
+                        {messages?.length || 0} mensagens
+                      </Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-1 overflow-hidden">
+                    {messagesLoading ? (
+                      <div className="space-y-4">
+                        {[...Array(3)].map((_, i) => (
+                          <div key={i} className="space-y-2">
+                            <Skeleton className="h-4 w-20" />
+                            <Skeleton className="h-16 w-full" />
+                          </div>
+                        ))}
+                      </div>
+                    ) : messagesError ? (
+                      <div className="text-center py-8">
+                        <p className="text-muted-foreground">
+                          Erro ao carregar mensagens
+                        </p>
+                      </div>
+                    ) : !messages || messages.length === 0 ? (
+                      <div className="text-center py-8">
+                        <p className="text-muted-foreground">
+                          Nenhuma mensagem encontrada
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="h-full overflow-y-auto">
+                        <div className="space-y-2">
+                          {messages.map((message) => (
+                            <MessageBubble key={message.id} message={message} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="processos" className="h-full overflow-y-auto">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <IconFileText className="w-5 h-5" />
+                      Processos Relacionados
+                      <Badge variant="outline">
+                        {processos?.length || 0} processos
+                      </Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {processosLoading ? (
+                      <div className="space-y-4">
+                        {[...Array(2)].map((_, i) => (
+                          <div key={i} className="space-y-2">
+                            <Skeleton className="h-4 w-3/4" />
+                            <Skeleton className="h-3 w-1/2" />
+                          </div>
+                        ))}
+                      </div>
+                    ) : processosError ? (
+                      <div className="text-center py-8">
+                        <p className="text-muted-foreground">
+                          Erro ao carregar processos
+                        </p>
+                      </div>
+                    ) : !processos || processos.length === 0 ? (
+                      <div className="text-center py-8">
+                        <p className="text-muted-foreground">
+                          Nenhum processo relacionado encontrado
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {processos.map((processo: any) => (
+                          <Card key={processo.id} className="p-4">
+                            <div className="flex items-start justify-between">
+                              <div className="space-y-2">
+                                <h4 className="font-medium">{processo.titulo}</h4>
+                                {processo.numero && (
+                                  <p className="text-sm text-muted-foreground">
+                                    Nº {processo.numero}
+                                  </p>
+                                )}
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="outline">{processo.status}</Badge>
+                                  <Badge variant="secondary">{processo.areaJuridica}</Badge>
+                                </div>
+                              </div>
+                              <Button variant="outline" size="sm">
+                                Ver Detalhes
+                              </Button>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="timeline" className="h-full overflow-y-auto">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <IconClock className="w-5 h-5" />
+                      Timeline de Interações
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {timelineEvents.map((event, index) => (
+                        <div key={event.id} className="flex gap-4">
+                          <div className="flex flex-col items-center">
+                            <div className="w-3 h-3 bg-primary rounded-full"></div>
+                            {index < timelineEvents.length - 1 && (
+                              <div className="w-px h-12 bg-border mt-2"></div>
+                            )}
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <div className="flex items-center justify-between">
+                              <h4 className="font-medium text-sm">{event.titulo}</h4>
+                              <span className="text-xs text-muted-foreground">
+                                {format(event.timestamp, 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+                              </span>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{event.descricao}</p>
+                            <p className="text-xs text-muted-foreground">por {event.usuario}</p>
+                          </div>
+                        </div>
                       ))}
                     </div>
-                  </div>
-                )}
-              </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
             </div>
-          </div>
+          </Tabs>
         </div>
 
         <DrawerFooter className="pt-4">

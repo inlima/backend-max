@@ -65,12 +65,23 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Processo } from "@/types"
+import { BulkActionsProcessosToolbar } from "@/components/bulk-actions-processos-toolbar"
+import { AdvogadoAssignmentDialog } from "@/components/advogado-assignment-dialog"
+import { BulkPrazoDialog } from "@/components/bulk-prazo-dialog"
+import { BulkExportProcessosDialog } from "@/components/bulk-export-processos-dialog"
 
 interface ProcessosTableProps {
   data: Processo[]
+  isLoading?: boolean
   onSelectProcesso?: (processo: Processo) => void
   onEditProcesso?: (processo: Processo) => void
   onUpdateStatus?: (processo: Processo, newStatus: Processo['status']) => void
+  onBulkStatusUpdate?: (processoIds: string[], newStatus: Processo['status']) => Promise<void>
+  onBulkAdvogadoAssignment?: (processoIds: string[], advogadoId: string) => Promise<void>
+  onBulkPrazoUpdate?: (processoIds: string[], prazos: any[]) => Promise<void>
+  onBulkExport?: (processoIds: string[], options: any) => Promise<void>
+  onBulkArchive?: (processoIds: string[]) => Promise<void>
+  availableAdvogados?: any[]
 }
 
 // Status badge component
@@ -254,7 +265,19 @@ function ProcessoCard({ processo, onSelect, onEdit, onUpdateStatus }: {
   )
 }
 
-export function ProcessosTable({ data, onSelectProcesso, onEditProcesso, onUpdateStatus }: ProcessosTableProps) {
+export function ProcessosTable({ 
+  data, 
+  isLoading = false, 
+  onSelectProcesso, 
+  onEditProcesso, 
+  onUpdateStatus,
+  onBulkStatusUpdate,
+  onBulkAdvogadoAssignment,
+  onBulkPrazoUpdate,
+  onBulkExport,
+  onBulkArchive,
+  availableAdvogados = []
+}: ProcessosTableProps) {
   const isMobile = useIsMobile()
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
@@ -271,6 +294,12 @@ export function ProcessosTable({ data, onSelectProcesso, onEditProcesso, onUpdat
     pageIndex: 0,
     pageSize: isMobile ? 5 : 10, // Smaller page size on mobile
   })
+
+  // Bulk operations state
+  const [showAdvogadoDialog, setShowAdvogadoDialog] = React.useState(false)
+  const [showPrazoDialog, setShowPrazoDialog] = React.useState(false)
+  const [showExportDialog, setShowExportDialog] = React.useState(false)
+  const [bulkLoading, setBulkLoading] = React.useState(false)
 
   const columns: ColumnDef<Processo>[] = React.useMemo(() => [
     {
@@ -503,8 +532,101 @@ export function ProcessosTable({ data, onSelectProcesso, onEditProcesso, onUpdat
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
 
+  // Get selected rows
+  const selectedRows = table.getFilteredSelectedRowModel().rows
+  const selectedProcessos = selectedRows.map(row => row.original)
+  const selectedIds = selectedProcessos.map(p => p.id)
+
+  // Bulk operation handlers
+  const handleBulkStatusUpdate = async (status: Processo['status']) => {
+    if (!onBulkStatusUpdate || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkStatusUpdate(selectedIds, status)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkAdvogadoAssignment = async (advogadoId: string) => {
+    if (!onBulkAdvogadoAssignment || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkAdvogadoAssignment(selectedIds, advogadoId)
+      setShowAdvogadoDialog(false)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkPrazoUpdate = async (prazos: any[]) => {
+    if (!onBulkPrazoUpdate || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkPrazoUpdate(selectedIds, prazos)
+      setShowPrazoDialog(false)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkExport = async (options: any) => {
+    if (!onBulkExport || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkExport(selectedIds, options)
+      setShowExportDialog(false)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleBulkArchive = async () => {
+    if (!onBulkArchive || selectedIds.length === 0) return
+    
+    setBulkLoading(true)
+    try {
+      await onBulkArchive(selectedIds)
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
+  const handleClearSelection = () => {
+    setRowSelection({})
+  }
+
+
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
+      {/* Bulk Actions Toolbar */}
+      <BulkActionsProcessosToolbar
+        selectedItems={selectedProcessos}
+        onClearSelection={handleClearSelection}
+        onBulkStatusUpdate={handleBulkStatusUpdate}
+        onBulkAdvogadoAssignment={() => setShowAdvogadoDialog(true)}
+        onBulkPrazoUpdate={() => setShowPrazoDialog(true)}
+        onBulkExport={() => setShowExportDialog(true)}
+        onBulkArchive={handleBulkArchive}
+        availableAdvogados={availableAdvogados.map(a => a.nome)}
+        isLoading={bulkLoading}
+      />
+
       {/* Table controls */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
@@ -704,6 +826,34 @@ export function ProcessosTable({ data, onSelectProcesso, onEditProcesso, onUpdat
           </div>
         </div>
       </div>
+
+      {/* Advogado Assignment Dialog */}
+      <AdvogadoAssignmentDialog
+        open={showAdvogadoDialog}
+        onOpenChange={setShowAdvogadoDialog}
+        selectedItems={selectedProcessos}
+        availableAdvogados={availableAdvogados}
+        onAssignAdvogado={handleBulkAdvogadoAssignment}
+        isLoading={bulkLoading}
+      />
+
+      {/* Bulk Prazo Dialog */}
+      <BulkPrazoDialog
+        open={showPrazoDialog}
+        onOpenChange={setShowPrazoDialog}
+        selectedItems={selectedProcessos}
+        onUpdatePrazos={handleBulkPrazoUpdate}
+        isLoading={bulkLoading}
+      />
+
+      {/* Bulk Export Dialog */}
+      <BulkExportProcessosDialog
+        open={showExportDialog}
+        onOpenChange={setShowExportDialog}
+        selectedItems={selectedProcessos}
+        onExport={handleBulkExport}
+        isLoading={bulkLoading}
+      />
     </div>
   )
 }
