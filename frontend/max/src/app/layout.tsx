@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { WebSocketProvider, ThemeProvider, AuthProvider, ReactQueryProvider } from "@/providers";
+import {
+  WebSocketProvider,
+  ThemeProvider,
+  AuthProvider,
+  ReactQueryProvider,
+} from "@/providers";
 import { SecurityProvider } from "@/components/security/security-provider";
 import { Toaster } from "sonner";
 import { ClientOnlyWrapper } from "@/components/client-only-wrapper";
@@ -43,16 +48,16 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
-}
+};
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 
@@ -73,16 +78,16 @@ export default function RootLayout({
               <AuthProvider>
                 <WebSocketProvider>
                   {children}
-                  <Toaster 
+                  <Toaster
                     position="top-right"
                     richColors
                     closeButton
                     duration={4000}
                     toastOptions={{
                       // Accessibility improvements for toasts
-                      role: 'status',
-                      'aria-live': 'polite',
-                      'aria-atomic': 'true'
+                      role: "status",
+                      "aria-live": "polite",
+                      "aria-atomic": "true",
                     }}
                   />
                   <ClientOnlyWrapper>
