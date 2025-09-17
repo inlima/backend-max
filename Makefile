@@ -4,29 +4,29 @@
 
 # Install dependencies
 install:
-	poetry install
+	uv sync
 
 # Install development dependencies
 dev:
-	poetry install --with dev
+	uv sync --extra dev
 
 # Run tests
 test:
-	poetry run pytest -v
+	uv run pytest -v
 
 # Run tests with coverage
 test-cov:
-	poetry run pytest --cov=app --cov-report=html --cov-report=term-missing
+	uv run pytest --cov=app --cov-report=html --cov-report=term-missing
 
 # Lint code
 lint:
-	poetry run flake8 app tests
-	poetry run mypy app
+	uv run flake8 app tests
+	uv run mypy app
 
 # Format code
 format:
-	poetry run black app tests
-	poetry run isort app tests
+	uv run black app tests
+	uv run isort app tests
 
 # Clean cache and build files
 clean:
@@ -37,22 +37,33 @@ clean:
 	rm -rf htmlcov
 	rm -rf dist
 	rm -rf build
+	rm -rf .uv_cache
 
 # Run development server
 run:
-	poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+	uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+# Database operations
+db-setup:
+	uv run python scripts/setup_database.py
+
+db-seed:
+	uv run python scripts/seed_database.py
 
 # Create database migration
 migrate:
-	poetry run alembic revision --autogenerate -m "$(msg)"
+	uv run alembic revision --autogenerate -m "$(msg)"
 
 # Apply database migrations
 upgrade:
-	poetry run alembic upgrade head
+	uv run alembic upgrade head
 
 # Rollback database migration
 downgrade:
-	poetry run alembic downgrade -1
+	uv run alembic downgrade -1
+
+# Reset database (drop, create, seed)
+db-reset: db-setup
 
 # Setup development environment
 setup: install
@@ -61,5 +72,5 @@ setup: install
 
 # Run all checks (lint, test, format check)
 check: lint test
-	poetry run black --check app tests
-	poetry run isort --check-only app tests
+	uv run black --check app tests
+	uv run isort --check-only app tests

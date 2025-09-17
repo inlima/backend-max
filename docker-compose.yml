@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql+asyncpg://postgres:password@db:5432/advocacia_direta
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/max_system
       - REDIS_URL=redis://redis:6379/0
     depends_on:
       - db
@@ -18,9 +18,9 @@ services:
   db:
     image: postgres:15
     environment:
-      - POSTGRES_DB=advocacia_direta
+      - POSTGRES_DB=max_system
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
     volumes:

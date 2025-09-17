@@ -14,7 +14,15 @@ from app.config import settings
 
 # Import all models to ensure they're registered with Base.metadata
 from app.models import (
+    User,
     UserSession,
+    Client,
+    ClientContact,
+    LegalCase,
+    CaseDocument,
+    CaseActivity,
+    Appointment,
+    WhatsAppSession,
     ConversationState,
     MessageHistory,
     AnalyticsEvent,

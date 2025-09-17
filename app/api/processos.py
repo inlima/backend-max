@@ -1,5 +1,5 @@
 """
-Processos API endpoints for frontend integration.
+Processos API endpoints.
 """
 
 import logging

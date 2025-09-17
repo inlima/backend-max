@@ -1,0 +1,1013 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-12-14T10:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "req_root",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}",
+      "name": "🏠 API Root",
+      "description": "Endpoint raiz da API com informações básicas",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1702550400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_health",
+      "parentId": "fld_health",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/health/",
+      "name": "Health Check",
+      "description": "Verificar status da aplicação",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1702550400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_login",
+      "parentId": "fld_auth",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/auth/login",
+      "name": "Login",
+      "description": "Autenticar usuário e obter token JWT",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@advocacia.com\",\n  \"password\": \"admin123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1702550400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_login_recepcionista",
+      "parentId": "fld_auth",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/auth/login",
+      "name": "Login Recepcionista",
+      "description": "Login com usuário recepcionista",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"recepcionista@advocacia.com\",\n  \"password\": \"recep123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1702550300000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_me",
+      "parentId": "fld_auth",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/auth/me",
+      "name": "Get Current User",
+      "description": "Obter informações do usuário atual",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550200000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_refresh_token",
+      "parentId": "fld_auth",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/auth/refresh",
+      "name": "Refresh Token",
+      "description": "Renovar token de acesso",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550100000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_logout",
+      "parentId": "fld_auth",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/auth/logout",
+      "name": "Logout",
+      "description": "Fazer logout do usuário",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_contatos",
+      "parentId": "fld_contatos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/contatos",
+      "name": "Listar Contatos",
+      "description": "Obter lista paginada de contatos",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "page",
+          "value": "1",
+          "description": "Página (padrão: 1)"
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "Itens por página (padrão: 50)"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_contato",
+      "parentId": "fld_contatos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/contatos/{{ _.contato_id }}",
+      "name": "Obter Contato",
+      "description": "Obter detalhes de um contato específico",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550300000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_contato_messages",
+      "parentId": "fld_contatos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/contatos/{{ _.contato_id }}/messages",
+      "name": "Mensagens do Contato",
+      "description": "Obter histórico de mensagens de um contato",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550200000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_contato",
+      "parentId": "fld_contatos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/contatos",
+      "name": "Criar Contato",
+      "description": "Criar novo contato manualmente",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"João Silva\",\n  \"telefone\": \"5511999999999\",\n  \"areaInteresse\": \"Direito Civil\",\n  \"preferenciaAtendimento\": \"presencial\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550100000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_contato",
+      "parentId": "fld_contatos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/contatos/{{ _.contato_id }}",
+      "name": "Atualizar Contato",
+      "description": "Atualizar informações de um contato",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"João Silva Santos\",\n  \"areaInteresse\": \"Direito Trabalhista\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550000000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_processos",
+      "parentId": "fld_processos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/processos",
+      "name": "Listar Processos",
+      "description": "Obter lista paginada de processos",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "page",
+          "value": "1",
+          "description": "Página"
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "Itens por página"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_processo",
+      "parentId": "fld_processos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/processos/{{ _.processo_id }}",
+      "name": "Obter Processo",
+      "description": "Obter detalhes de um processo específico",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550300000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_create_processo",
+      "parentId": "fld_processos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/processos",
+      "name": "Criar Processo",
+      "description": "Criar novo processo",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Ação Trabalhista - João Silva\",\n  \"contatoId\": \"{{ _.contato_id }}\",\n  \"areaJuridica\": \"Direito Trabalhista\",\n  \"descricao\": \"Processo de rescisão indevida\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550200000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_processo",
+      "parentId": "fld_processos",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/processos/{{ _.processo_id }}",
+      "name": "Atualizar Processo",
+      "description": "Atualizar informações de um processo",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Ação Trabalhista - João Silva Santos\",\n  \"observacoes\": \"Cliente forneceu documentos adicionais\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550100000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_dashboard_metrics",
+      "parentId": "fld_dashboard",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/dashboard/metrics",
+      "name": "Métricas Dashboard",
+      "description": "Obter métricas principais do dashboard",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_dashboard_chart",
+      "parentId": "fld_dashboard",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/dashboard/chart-data",
+      "name": "Dados do Gráfico",
+      "description": "Obter dados para gráficos do dashboard",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "days",
+          "value": "30",
+          "description": "Número de dias (padrão: 30)"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550300000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_dashboard_activity",
+      "parentId": "fld_dashboard",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/dashboard/recent-activity",
+      "name": "Atividade Recente",
+      "description": "Obter atividades recentes",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "Limite de itens (padrão: 10)"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702550200000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_webhook_verify",
+      "parentId": "fld_webhook",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/webhook",
+      "name": "Verificar Webhook",
+      "description": "Endpoint para verificação do webhook do WhatsApp",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "hub.mode",
+          "value": "subscribe",
+          "description": "Modo de verificação"
+        },
+        {
+          "name": "hub.challenge",
+          "value": "test_challenge_123",
+          "description": "Challenge do Facebook"
+        },
+        {
+          "name": "hub.verify_token",
+          "value": "seu_verify_token_aqui",
+          "description": "Token de verificação"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1702550400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_webhook_receive",
+      "parentId": "fld_webhook",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/webhook",
+      "name": "Receber Webhook",
+      "description": "Endpoint para receber mensagens do WhatsApp",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"entry\": [\n    {\n      \"changes\": [\n        {\n          \"value\": {\n            \"messages\": [\n              {\n                \"id\": \"wamid.test123\",\n                \"from\": \"5511999999999\",\n                \"timestamp\": \"1702550400\",\n                \"type\": \"text\",\n                \"text\": {\n                  \"body\": \"Olá, preciso de ajuda jurídica\"\n                }\n              }\n            ],\n            \"contacts\": [\n              {\n                \"profile\": {\n                  \"name\": \"João Silva\"\n                }\n              }\n            ],\n            \"metadata\": {\n              \"phone_number_id\": \"123456789\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "X-Hub-Signature-256",
+          "value": "sha256=test_signature",
+          "description": "Assinatura do webhook (opcional para teste)"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1702550300000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_send_text",
+      "parentId": "fld_whatsapp_messages",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/whatsapp/send-text",
+      "name": "Enviar Texto",
+      "description": "Enviar mensagem de texto via WhatsApp",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"phone_number\": \"5511999999999\",\n  \"text\": \"Olá! Esta é uma mensagem de teste da Advocacia Direta.\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702549800000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_send_image",
+      "parentId": "fld_whatsapp_messages",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/whatsapp/send-image",
+      "name": "Enviar Imagem",
+      "description": "Enviar mensagem com imagem via WhatsApp",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"phone_number\": \"5511999999999\",\n  \"image_url\": \"https://example.com/advocacia-direta-logo.jpg\",\n  \"caption\": \"🏛️ Advocacia Direta - Sempre ao seu lado!\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702549700000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_send_document",
+      "parentId": "fld_whatsapp_messages",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/whatsapp/send-document",
+      "name": "Enviar Documento",
+      "description": "Enviar documento via WhatsApp",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"phone_number\": \"5511999999999\",\n  \"document_url\": \"https://example.com/procuracao-modelo.pdf\",\n  \"filename\": \"modelo_procuracao.pdf\",\n  \"caption\": \"📄 Modelo de Procuração\\n\\nBaixe, preencha e assine este documento.\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702549600000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_send_contact",
+      "parentId": "fld_whatsapp_messages",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/whatsapp/send-contact",
+      "name": "Enviar Contato",
+      "description": "Enviar informações de contato via WhatsApp",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"phone_number\": \"5511999999999\",\n  \"contact_name\": \"Dr. João Silva\",\n  \"contact_phone\": \"5511888888888\",\n  \"contact_email\": \"joao.silva@advocaciadireta.com\",\n  \"organization\": \"Advocacia Direta - Direito Civil\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702549500000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_send_location",
+      "parentId": "fld_whatsapp_messages",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/whatsapp/send-location",
+      "name": "Enviar Localização",
+      "description": "Enviar localização via WhatsApp",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"phone_number\": \"5511999999999\",\n  \"latitude\": -23.5505,\n  \"longitude\": -46.6333,\n  \"name\": \"Advocacia Direta - Escritório Principal\",\n  \"address\": \"Rua dos Advogados, 123 - Centro, São Paulo - SP\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702549400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_send_law_firm_contact",
+      "parentId": "fld_whatsapp_messages",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/whatsapp/send-law-firm-contact?phone_number=5511999999999",
+      "name": "Enviar Contato do Escritório",
+      "description": "Enviar contato completo do escritório",
+      "method": "POST",
+      "body": {},
+      "parameters": [
+        {
+          "name": "phone_number",
+          "value": "5511999999999",
+          "description": "Número do WhatsApp"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702549300000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_message_types",
+      "parentId": "fld_whatsapp_messages",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "url": "{{ _.base_url }}/api/whatsapp/message-types",
+      "name": "Tipos de Mensagem",
+      "description": "Listar tipos de mensagem suportados",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.auth_token }}"
+      },
+      "metaSortKey": -1702549200000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_advocacia_direta",
+      "parentId": null,
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "Advocacia Direta - Backend API",
+      "description": "Collection completa da API Backend do sistema Advocacia Direta",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "fld_health",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "🏥 Health Check",
+      "description": "Endpoints de verificação de saúde da aplicação",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1702550400000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_auth",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "🔐 Autenticação",
+      "description": "Endpoints de autenticação e autorização",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1702550300000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_contatos",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "👥 Contatos",
+      "description": "Endpoints de gestão de contatos/clientes",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1702550200000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_processos",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "⚖️ Processos",
+      "description": "Endpoints de gestão de processos jurídicos",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1702550100000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_dashboard",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "📊 Dashboard",
+      "description": "Endpoints de métricas e analytics",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1702550000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_webhook",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "📱 WhatsApp Webhook",
+      "description": "Endpoints do webhook do WhatsApp Business",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1702549900000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_whatsapp_messages",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "💬 WhatsApp Messages",
+      "description": "Endpoints para envio de diferentes tipos de mensagem WhatsApp",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1702549850000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "env_base",
+      "parentId": "wrk_advocacia_direta",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:8000",
+        "auth_token": "",
+        "contato_id": "",
+        "processo_id": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "auth_token",
+          "contato_id",
+          "processo_id"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1702550400000,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_production",
+      "parentId": "env_base",
+      "modified": 1702550400000,
+      "created": 1702550400000,
+      "name": "Production",
+      "data": {
+        "base_url": "https://api.advocaciadireta.com"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url"
+        ]
+      },
+      "color": "#ff6b6b",
+      "isPrivate": false,
+      "metaSortKey": 1702550400000,
+      "_type": "environment"
+    }
+  ]
+}

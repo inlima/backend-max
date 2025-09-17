@@ -35,12 +35,7 @@ scrape_configs:
     metrics_path: '/metrics'
     scrape_interval: 30s
 
-  # Frontend metrics (if available)
-  - job_name: 'advocacia-frontend'
-    static_configs:
-      - targets: ['frontend:3000']
-    metrics_path: '/api/metrics'
-    scrape_interval: 30s
+
 
   # Database metrics
   - job_name: 'postgres'
