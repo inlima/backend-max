@@ -50,32 +50,15 @@ SESSION_TIMEOUT_MINUTES=30
 LOG_LEVEL=INFO
 EOF
 
-# Build and optimize frontend
-echo "🏗️  Building frontend for production..."
-cd frontend/max
-npm ci --only=production
-npm run build:production
-npm run type-check
-cd ../..
+# Install Python dependencies
+echo "🏗️  Installing Python dependencies..."
+uv sync --no-dev
 
 # Run security checks
 echo "🔒 Running security checks..."
-cd frontend/max
-npm audit --audit-level=high
-cd ../..
+uv run safety check || echo "⚠️  Security check completed with warnings"
 
-# Create SSL directory for nginx
-echo "🔐 Setting up SSL directory..."
-mkdir -p nginx/ssl
 
-# Generate self-signed certificate for development (replace with real certificates in production)
-if [ ! -f nginx/ssl/cert.pem ]; then
-    echo "📜 Generating self-signed SSL certificate..."
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-        -keyout nginx/ssl/key.pem \
-        -out nginx/ssl/cert.pem \
-        -subj "/C=BR/ST=Bahia/L=Salvador/O=Advocacia Direta/CN=advocaciadireta.com"
-fi
 
 # Create necessary directories
 echo "📁 Creating necessary directories..."
@@ -85,8 +68,6 @@ mkdir -p backups
 # Set proper permissions
 echo "🔧 Setting file permissions..."
 chmod +x scripts/*.sh
-chmod 600 nginx/ssl/key.pem
-chmod 644 nginx/ssl/cert.pem
 
 # Build Docker images
 echo "🐳 Building Docker images..."
@@ -112,7 +93,6 @@ sleep 30
 # Health checks
 echo "🏥 Running health checks..."
 curl -f http://localhost:8000/health/ || echo "⚠️  Backend health check failed"
-curl -f http://localhost:3000/ || echo "⚠️  Frontend health check failed"
 
 # Display status
 echo "📊 Service status:"
@@ -122,13 +102,13 @@ echo ""
 echo "✅ Production setup completed!"
 echo ""
 echo "🌐 Services are running on:"
-echo "   - Frontend: http://localhost:3000"
 echo "   - Backend API: http://localhost:8000"
 echo "   - Database: localhost:5432"
+echo "   - Redis: localhost:6379"
 echo ""
 echo "📝 Next steps:"
 echo "   1. Configure your domain DNS to point to this server"
-echo "   2. Replace self-signed SSL certificates with real ones"
+echo "   2. Set up SSL certificates for HTTPS"
 echo "   3. Set up monitoring and backup procedures"
 echo "   4. Configure WhatsApp webhook URL in Facebook Developer Console"
 echo ""

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test script for API integration with frontend.
+Test script for API integration.
 """
 
 import asyncio
@@ -11,7 +11,7 @@ from datetime import datetime
 BASE_URL = "http://localhost:8000"
 
 async def test_api_endpoints():
-    """Test all API endpoints that the frontend will use."""
+    """Test all API endpoints."""
     
     async with httpx.AsyncClient() as client:
         print("🧪 Testing API Integration...")
@@ -115,4 +115,4 @@ if __name__ == "__main__":
     
     print()
     print("🏁 API integration tests completed!")
-    print("If all tests passed, the backend is ready for frontend integration.")
+    print("If all tests passed, the backend API is working correctly.")

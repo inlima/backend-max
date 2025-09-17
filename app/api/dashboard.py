@@ -1,5 +1,5 @@
 """
-Dashboard API endpoints for frontend integration.
+Dashboard API endpoints.
 """
 
 import logging

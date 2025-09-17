@@ -215,7 +215,7 @@ async def handle_incoming_message(message_data: Dict[str, Any]) -> None:
         # Process normal conversation flow
         await conversation_service.process_message(phone_number, user_response, contact_name)
         
-        # Emit real-time events for frontend
+        # Emit real-time events via WebSocket
         try:
             from app.api.websocket import emit_nova_mensagem, emit_contato_atualizado
             
@@ -227,7 +227,7 @@ async def handle_incoming_message(message_data: Dict[str, Any]) -> None:
                 "timestamp": message_data.get("timestamp")
             })
             
-            # Emit contact updated event (will trigger frontend to refresh contact data)
+            # Emit contact updated event via WebSocket
             await emit_contato_atualizado({
                 "phone_number": phone_number,
                 "action": "new_message"

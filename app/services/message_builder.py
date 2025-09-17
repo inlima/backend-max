@@ -5,7 +5,8 @@ Message template system for conversation flows.
 import logging
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Any
-from .whatsapp_client import InteractiveMessage, Button
+from .whatsapp_client import InteractiveMessage, Button, MediaMessage, ContactMessage, LocationMessage
+from .message_utils import MessageUtils
 
 logger = logging.getLogger(__name__)
 
@@ -518,6 +519,167 @@ class MessageBuilder:
             summary_parts.append(f"📱 WhatsApp: {collected_data['phone_number']}")
         
         return "\n".join(summary_parts)
+    
+    # New methods for multimedia messages
+    
+    def build_welcome_image(self) -> MediaMessage:
+        """Build welcome image message."""
+        return MediaMessage(
+            media_type="image",
+            media_url="https://example.com/welcome-advocacia-direta.jpg",  # Replace with actual URL
+            caption="🏛️ Bem-vindo à Advocacia Direta!\n\nEstamos aqui para defender seus direitos com excelência e dedicação."
+        )
+    
+    def build_office_location(self) -> LocationMessage:
+        """Build office location message."""
+        return MessageUtils.create_office_location()
+    
+    def build_law_firm_contact(self) -> ContactMessage:
+        """Build law firm contact message."""
+        contact = MessageUtils.create_law_firm_contact()
+        return ContactMessage(contacts=[contact])
+    
+    def build_lawyer_contact(self, lawyer_name: str, phone: str, specialization: str = None) -> ContactMessage:
+        """Build lawyer contact message."""
+        contact = MessageUtils.create_lawyer_contact(
+            name=lawyer_name,
+            phone=phone,
+            email=f"{lawyer_name.lower().replace(' ', '.')}@advocaciadireta.com",
+            specialization=specialization
+        )
+        return ContactMessage(contacts=[contact])
+    
+    def build_document_message(self, document_type: str) -> MediaMessage:
+        """Build document message based on type."""
+        templates = MessageUtils.create_document_templates()
+        doc_info = templates.get(document_type, templates["checklist_documentos"])
+        
+        return MediaMessage(
+            media_type="document",
+            media_url=f"https://example.com/documents/{doc_info['filename']}",  # Replace with actual URL
+            filename=doc_info["filename"],
+            caption=doc_info["caption"]
+        )
+    
+    def build_practice_area_info_image(self, practice_area: str) -> MediaMessage:
+        """Build practice area information image."""
+        area_info = MessageUtils.create_practice_area_info()
+        info = area_info.get(practice_area, area_info["direito_civil"])
+        
+        return MediaMessage(
+            media_type="image",
+            media_url=f"https://example.com/areas/{practice_area}.jpg",  # Replace with actual URL
+            caption=f"{info['icon']} **{info['title']}**\n\n{info['description']}\n\nNossa equipe especializada está pronta para ajudá-lo!"
+        )
+    
+    def build_appointment_confirmation_image(self) -> MediaMessage:
+        """Build appointment confirmation image."""
+        return MessageUtils.create_appointment_confirmation_image()
+    
+    def build_welcome_video(self) -> MediaMessage:
+        """Build welcome video message."""
+        return MessageUtils.create_welcome_video()
+    
+    def build_instruction_audio(self, instruction_type: str) -> MediaMessage:
+        """Build instruction audio message."""
+        return MessageUtils.create_audio_instructions(instruction_type)
+    
+    def build_case_summary_document(self, case_data: Dict[str, Any]) -> MediaMessage:
+        """Build case summary document."""
+        summary = MessageUtils.format_case_summary(case_data)
+        
+        return MediaMessage(
+            media_type="document",
+            media_url="https://example.com/case-summary.pdf",  # Replace with actual URL
+            filename=f"resumo_caso_{case_data.get('case_id', 'novo')}.pdf",
+            caption=f"📋 Resumo do Caso\n\n{summary[:100]}..."
+        )
+    
+    def build_enhanced_welcome_with_media(self) -> List[Dict[str, Any]]:
+        """Build enhanced welcome sequence with multiple message types."""
+        messages = []
+        
+        # 1. Welcome image
+        messages.append({
+            "type": "image",
+            "content": self.build_welcome_image()
+        })
+        
+        # 2. Welcome text with buttons
+        messages.append({
+            "type": "interactive", 
+            "content": self.build_welcome_message()
+        })
+        
+        # 3. Office location (optional)
+        messages.append({
+            "type": "location",
+            "content": self.build_office_location()
+        })
+        
+        return messages
+    
+    def build_consultation_package(self, practice_area: str) -> List[Dict[str, Any]]:
+        """Build consultation information package."""
+        messages = []
+        
+        # 1. Practice area info image
+        messages.append({
+            "type": "image",
+            "content": self.build_practice_area_info_image(practice_area)
+        })
+        
+        # 2. Relevant document
+        doc_types = {
+            "area_civil": "procuracao",
+            "area_trabalhista": "checklist_documentos", 
+            "area_familia": "declaracao_hipossuficiencia",
+            "area_criminal": "contrato_honorarios",
+            "area_empresarial": "contrato_honorarios"
+        }
+        doc_type = doc_types.get(practice_area, "checklist_documentos")
+        
+        messages.append({
+            "type": "document",
+            "content": self.build_document_message(doc_type)
+        })
+        
+        # 3. Audio instructions
+        messages.append({
+            "type": "audio",
+            "content": self.build_instruction_audio("processo_consulta")
+        })
+        
+        return messages
+    
+    def build_handoff_package(self, collected_data: Dict[str, Any], lawyer_info: Dict[str, str] = None) -> List[Dict[str, Any]]:
+        """Build handoff package with lawyer contact and case summary."""
+        messages = []
+        
+        # 1. Handoff text message
+        messages.append({
+            "type": "text",
+            "content": self.build_handoff_message(collected_data)
+        })
+        
+        # 2. Lawyer contact (if provided)
+        if lawyer_info:
+            messages.append({
+                "type": "contacts",
+                "content": self.build_lawyer_contact(
+                    lawyer_info.get("name", "Advogado Responsável"),
+                    lawyer_info.get("phone", "5511999999999"),
+                    lawyer_info.get("specialization")
+                )
+            })
+        
+        # 3. Case summary document
+        messages.append({
+            "type": "document", 
+            "content": self.build_case_summary_document(collected_data)
+        })
+        
+        return messages
 
 
 # Factory function for dependency injection

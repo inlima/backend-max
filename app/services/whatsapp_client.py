@@ -19,6 +19,12 @@ class MessageType(Enum):
     """Message types for WhatsApp API."""
     TEXT = "text"
     INTERACTIVE = "interactive"
+    IMAGE = "image"
+    AUDIO = "audio"
+    VIDEO = "video"
+    DOCUMENT = "document"
+    CONTACTS = "contacts"
+    LOCATION = "location"
 
 
 @dataclass
@@ -67,6 +73,78 @@ class InteractiveMessage:
             result["interactive"]["action"] = {
                 "buttons": [button.to_dict()["reply"] for button in self.buttons]
             }
+            
+        return result
+
+
+@dataclass
+class MediaMessage:
+    """Media message (image, audio, video, document)."""
+    media_type: str  # 'image', 'audio', 'video', 'document'
+    media_id: Optional[str] = None  # Media ID from uploaded media
+    media_url: Optional[str] = None  # Direct URL to media
+    caption: Optional[str] = None  # Caption for image/video/document
+    filename: Optional[str] = None  # Filename for document
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert media message to WhatsApp API format."""
+        result = {
+            "type": self.media_type,
+            self.media_type: {}
+        }
+        
+        # Use media ID if available, otherwise use URL
+        if self.media_id:
+            result[self.media_type]["id"] = self.media_id
+        elif self.media_url:
+            result[self.media_type]["link"] = self.media_url
+        
+        # Add caption for supported types
+        if self.caption and self.media_type in ["image", "video", "document"]:
+            result[self.media_type]["caption"] = self.caption
+        
+        # Add filename for documents
+        if self.filename and self.media_type == "document":
+            result[self.media_type]["filename"] = self.filename
+            
+        return result
+
+
+@dataclass
+class ContactMessage:
+    """Contact message."""
+    contacts: List[Dict[str, Any]]
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert contact message to WhatsApp API format."""
+        return {
+            "type": "contacts",
+            "contacts": self.contacts
+        }
+
+
+@dataclass
+class LocationMessage:
+    """Location message."""
+    latitude: float
+    longitude: float
+    name: Optional[str] = None
+    address: Optional[str] = None
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert location message to WhatsApp API format."""
+        result = {
+            "type": "location",
+            "location": {
+                "latitude": self.latitude,
+                "longitude": self.longitude
+            }
+        }
+        
+        if self.name:
+            result["location"]["name"] = self.name
+        if self.address:
+            result["location"]["address"] = self.address
             
         return result
 
@@ -232,10 +310,56 @@ class WhatsAppClient:
         if message_type and content:
             if message_type == MessageType.TEXT:
                 return await self.send_text_message(phone_number, content.get("text", ""))
+            
             elif message_type == MessageType.INTERACTIVE:
                 interactive_msg = content.get("interactive")
                 if isinstance(interactive_msg, InteractiveMessage):
                     return await self.send_interactive_message(phone_number, interactive_msg)
+            
+            elif message_type == MessageType.IMAGE:
+                return await self.send_image_message(
+                    phone_number,
+                    image_url=content.get("image_url"),
+                    image_id=content.get("image_id"),
+                    caption=content.get("caption")
+                )
+            
+            elif message_type == MessageType.AUDIO:
+                return await self.send_audio_message(
+                    phone_number,
+                    audio_url=content.get("audio_url"),
+                    audio_id=content.get("audio_id")
+                )
+            
+            elif message_type == MessageType.VIDEO:
+                return await self.send_video_message(
+                    phone_number,
+                    video_url=content.get("video_url"),
+                    video_id=content.get("video_id"),
+                    caption=content.get("caption")
+                )
+            
+            elif message_type == MessageType.DOCUMENT:
+                return await self.send_document_message(
+                    phone_number,
+                    document_url=content.get("document_url"),
+                    document_id=content.get("document_id"),
+                    filename=content.get("filename"),
+                    caption=content.get("caption")
+                )
+            
+            elif message_type == MessageType.CONTACTS:
+                contacts = content.get("contacts", [])
+                return await self.send_contact_message(phone_number, contacts)
+            
+            elif message_type == MessageType.LOCATION:
+                return await self.send_location_message(
+                    phone_number,
+                    latitude=content.get("latitude"),
+                    longitude=content.get("longitude"),
+                    name=content.get("name"),
+                    address=content.get("address")
+                )
         
         return False
     
@@ -382,6 +506,358 @@ class WhatsAppClient:
             logger.error(f"Error sending list message: {str(e)}")
             return False
 
+    async def send_image_message(self, to: str, image_url: str = None, image_id: str = None, caption: str = None) -> bool:
+        """Send an image message."""
+        try:
+            formatted_to = self._format_phone_number(to)
+            
+            if not is_valid_brazilian_phone(formatted_to):
+                logger.warning(f"Invalid phone number format: {to} → {formatted_to}")
+            
+            url = f"{self.base_url}/messages"
+            
+            image_data = {}
+            if image_id:
+                image_data["id"] = image_id
+            elif image_url:
+                image_data["link"] = image_url
+            else:
+                logger.error("Either image_id or image_url must be provided")
+                return False
+            
+            if caption:
+                image_data["caption"] = caption
+            
+            payload = {
+                "messaging_product": "whatsapp",
+                "to": formatted_to,
+                "type": "image",
+                "image": image_data
+            }
+            
+            headers = self._get_headers()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers)
+                
+            if response.status_code == 200:
+                logger.debug(f"Image message sent to {formatted_to}")
+                return True
+            elif response.status_code == 401:
+                logger.error("❌ WhatsApp Access Token EXPIRED!")
+                return False
+            else:
+                logger.error(f"Failed to send image message to {formatted_to}: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending image message: {str(e)}")
+            return False
+
+    async def send_audio_message(self, to: str, audio_url: str = None, audio_id: str = None) -> bool:
+        """Send an audio message."""
+        try:
+            formatted_to = self._format_phone_number(to)
+            
+            if not is_valid_brazilian_phone(formatted_to):
+                logger.warning(f"Invalid phone number format: {to} → {formatted_to}")
+            
+            url = f"{self.base_url}/messages"
+            
+            audio_data = {}
+            if audio_id:
+                audio_data["id"] = audio_id
+            elif audio_url:
+                audio_data["link"] = audio_url
+            else:
+                logger.error("Either audio_id or audio_url must be provided")
+                return False
+            
+            payload = {
+                "messaging_product": "whatsapp",
+                "to": formatted_to,
+                "type": "audio",
+                "audio": audio_data
+            }
+            
+            headers = self._get_headers()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers)
+                
+            if response.status_code == 200:
+                logger.debug(f"Audio message sent to {formatted_to}")
+                return True
+            elif response.status_code == 401:
+                logger.error("❌ WhatsApp Access Token EXPIRED!")
+                return False
+            else:
+                logger.error(f"Failed to send audio message to {formatted_to}: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending audio message: {str(e)}")
+            return False
+
+    async def send_video_message(self, to: str, video_url: str = None, video_id: str = None, caption: str = None) -> bool:
+        """Send a video message."""
+        try:
+            formatted_to = self._format_phone_number(to)
+            
+            if not is_valid_brazilian_phone(formatted_to):
+                logger.warning(f"Invalid phone number format: {to} → {formatted_to}")
+            
+            url = f"{self.base_url}/messages"
+            
+            video_data = {}
+            if video_id:
+                video_data["id"] = video_id
+            elif video_url:
+                video_data["link"] = video_url
+            else:
+                logger.error("Either video_id or video_url must be provided")
+                return False
+            
+            if caption:
+                video_data["caption"] = caption
+            
+            payload = {
+                "messaging_product": "whatsapp",
+                "to": formatted_to,
+                "type": "video",
+                "video": video_data
+            }
+            
+            headers = self._get_headers()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers)
+                
+            if response.status_code == 200:
+                logger.debug(f"Video message sent to {formatted_to}")
+                return True
+            elif response.status_code == 401:
+                logger.error("❌ WhatsApp Access Token EXPIRED!")
+                return False
+            else:
+                logger.error(f"Failed to send video message to {formatted_to}: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending video message: {str(e)}")
+            return False
+
+    async def send_document_message(self, to: str, document_url: str = None, document_id: str = None, 
+                                  filename: str = None, caption: str = None) -> bool:
+        """Send a document message."""
+        try:
+            formatted_to = self._format_phone_number(to)
+            
+            if not is_valid_brazilian_phone(formatted_to):
+                logger.warning(f"Invalid phone number format: {to} → {formatted_to}")
+            
+            url = f"{self.base_url}/messages"
+            
+            document_data = {}
+            if document_id:
+                document_data["id"] = document_id
+            elif document_url:
+                document_data["link"] = document_url
+            else:
+                logger.error("Either document_id or document_url must be provided")
+                return False
+            
+            if filename:
+                document_data["filename"] = filename
+            if caption:
+                document_data["caption"] = caption
+            
+            payload = {
+                "messaging_product": "whatsapp",
+                "to": formatted_to,
+                "type": "document",
+                "document": document_data
+            }
+            
+            headers = self._get_headers()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers)
+                
+            if response.status_code == 200:
+                logger.debug(f"Document message sent to {formatted_to}")
+                return True
+            elif response.status_code == 401:
+                logger.error("❌ WhatsApp Access Token EXPIRED!")
+                return False
+            else:
+                logger.error(f"Failed to send document message to {formatted_to}: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending document message: {str(e)}")
+            return False
+
+    async def send_contact_message(self, to: str, contacts: List[Dict[str, Any]]) -> bool:
+        """Send a contact message."""
+        try:
+            formatted_to = self._format_phone_number(to)
+            
+            if not is_valid_brazilian_phone(formatted_to):
+                logger.warning(f"Invalid phone number format: {to} → {formatted_to}")
+            
+            url = f"{self.base_url}/messages"
+            
+            payload = {
+                "messaging_product": "whatsapp",
+                "to": formatted_to,
+                "type": "contacts",
+                "contacts": contacts
+            }
+            
+            headers = self._get_headers()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers)
+                
+            if response.status_code == 200:
+                logger.debug(f"Contact message sent to {formatted_to}")
+                return True
+            elif response.status_code == 401:
+                logger.error("❌ WhatsApp Access Token EXPIRED!")
+                return False
+            else:
+                logger.error(f"Failed to send contact message to {formatted_to}: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending contact message: {str(e)}")
+            return False
+
+    async def send_location_message(self, to: str, latitude: float, longitude: float, 
+                                  name: str = None, address: str = None) -> bool:
+        """Send a location message."""
+        try:
+            formatted_to = self._format_phone_number(to)
+            
+            if not is_valid_brazilian_phone(formatted_to):
+                logger.warning(f"Invalid phone number format: {to} → {formatted_to}")
+            
+            url = f"{self.base_url}/messages"
+            
+            location_data = {
+                "latitude": latitude,
+                "longitude": longitude
+            }
+            
+            if name:
+                location_data["name"] = name
+            if address:
+                location_data["address"] = address
+            
+            payload = {
+                "messaging_product": "whatsapp",
+                "to": formatted_to,
+                "type": "location",
+                "location": location_data
+            }
+            
+            headers = self._get_headers()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers)
+                
+            if response.status_code == 200:
+                logger.debug(f"Location message sent to {formatted_to}")
+                return True
+            elif response.status_code == 401:
+                logger.error("❌ WhatsApp Access Token EXPIRED!")
+                return False
+            else:
+                logger.error(f"Failed to send location message to {formatted_to}: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending location message: {str(e)}")
+            return False
+
+    async def send_media_message(self, to: str, media: MediaMessage) -> bool:
+        """Send a media message (image, audio, video, document)."""
+        try:
+            formatted_to = self._format_phone_number(to)
+            
+            if not is_valid_brazilian_phone(formatted_to):
+                logger.warning(f"Invalid phone number format: {to} → {formatted_to}")
+            
+            url = f"{self.base_url}/messages"
+            
+            # Convert MediaMessage to API format
+            message_dict = media.to_dict()
+            payload = {
+                "messaging_product": "whatsapp",
+                "to": formatted_to,
+                **message_dict
+            }
+            
+            headers = self._get_headers()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(url, json=payload, headers=headers)
+                
+            if response.status_code == 200:
+                logger.debug(f"{media.media_type.title()} message sent to {formatted_to}")
+                return True
+            elif response.status_code == 401:
+                logger.error("❌ WhatsApp Access Token EXPIRED!")
+                return False
+            else:
+                logger.error(f"Failed to send {media.media_type} message to {formatted_to}: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error sending media message: {str(e)}")
+            return False
+
+    async def upload_media(self, media_file_path: str, media_type: str) -> Optional[str]:
+        """Upload media file and return media ID."""
+        try:
+            url = f"{self.api_url}/{settings.WHATSAPP_PHONE_NUMBER_ID}/media"
+            
+            headers = {
+                "Authorization": f"Bearer {self.access_token}"
+            }
+            
+            # Determine MIME type based on media type and file extension
+            mime_types = {
+                "image": "image/jpeg",
+                "audio": "audio/mpeg", 
+                "video": "video/mp4",
+                "document": "application/pdf"
+            }
+            
+            with open(media_file_path, 'rb') as media_file:
+                files = {
+                    'file': (media_file_path, media_file, mime_types.get(media_type, "application/octet-stream")),
+                    'type': (None, media_type),
+                    'messaging_product': (None, 'whatsapp')
+                }
+                
+                async with httpx.AsyncClient() as client:
+                    response = await client.post(url, headers=headers, files=files)
+            
+            if response.status_code == 200:
+                result = response.json()
+                media_id = result.get("id")
+                logger.debug(f"Media uploaded successfully: {media_id}")
+                return media_id
+            else:
+                logger.error(f"Failed to upload media: {response.status_code} - {response.text}")
+                return None
+                
+        except Exception as e:
+            logger.error(f"Error uploading media: {str(e)}")
+            return None
+
     async def mark_as_read(self, message_id: str) -> bool:
         """Mark a message as read."""
         try:
@@ -432,5 +908,8 @@ __all__ = [
     "is_valid_brazilian_phone",
     "Button",
     "InteractiveMessage",
+    "MediaMessage",
+    "ContactMessage",
+    "LocationMessage",
     "MessageType"
 ]

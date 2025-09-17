@@ -7,7 +7,7 @@ from typing import Optional
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr
-import jwt
+from jose import jwt
 from passlib.context import CryptContext
 
 from app.config import settings
@@ -148,7 +148,7 @@ async def login(login_data: LoginRequest):
     user_data = {
         "id": user["id"],
         "email": user["email"],
-        "name": user["nome"],  # Mapping nome to name for frontend compatibility
+        "name": user["nome"],  # Mapping nome to name for API compatibility
         "role": user["role"],
         "is_active": user["is_active"]
     }

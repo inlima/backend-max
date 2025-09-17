@@ -101,6 +101,11 @@ ipython_config.py
 #   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
 #poetry.lock
 
+# uv
+#   uv.lock should be committed to version control for reproducible builds
+#   .uv_cache can be ignored as it's a local cache directory
+.uv_cache/
+
 # pdm
 #   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
 #pdm.lock

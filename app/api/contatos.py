@@ -1,5 +1,5 @@
 """
-Contatos API endpoints for frontend integration.
+Contatos API endpoints.
 """
 
 import logging
@@ -25,7 +25,7 @@ router = APIRouter()
 
 
 def session_to_contato(session: UserSession) -> ContatoResponse:
-    """Convert UserSession to Contato format for frontend."""
+    """Convert UserSession to Contato format."""
     # Extract data from conversation state
     state = session.conversation_state
     collected_data = session.collected_data or {}

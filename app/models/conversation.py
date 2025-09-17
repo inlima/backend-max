@@ -1,5 +1,5 @@
 """
-Conversation-related database models.
+WhatsApp conversation-related database models.
 """
 
 import uuid
@@ -14,10 +14,10 @@ from sqlalchemy.sql import func
 from app.core.database import Base
 
 
-class UserSession(Base):
-    """User session model for tracking WhatsApp conversations."""
+class WhatsAppSession(Base):
+    """WhatsApp session model for tracking conversations."""
     
-    __tablename__ = "user_sessions"
+    __tablename__ = "whatsapp_sessions"
     
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), 
@@ -25,6 +25,12 @@ class UserSession(Base):
         default=uuid.uuid4
     )
     phone_number: Mapped[str] = mapped_column(String(20), nullable=False, index=True)
+    client_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), 
+        ForeignKey("clients.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True
+    )
     current_step: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     collected_data: Mapped[Optional[Dict]] = mapped_column(JSON, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
@@ -41,6 +47,7 @@ class UserSession(Base):
     )
     
     # Relationships
+    client: Mapped[Optional["Client"]] = relationship("Client", back_populates="whatsapp_sessions")
     messages: Mapped[List["MessageHistory"]] = relationship(
         "MessageHistory", 
         back_populates="session",
@@ -59,7 +66,7 @@ class UserSession(Base):
     )
     
     def __repr__(self) -> str:
-        return f"<UserSession(id={self.id}, phone={self.phone_number}, step={self.current_step})>"
+        return f"<WhatsAppSession(id={self.id}, phone={self.phone_number}, step={self.current_step})>"
     
     def is_expired(self, timeout_minutes: int = 30) -> bool:
         """Check if session is expired based on last activity."""
@@ -86,7 +93,7 @@ class ConversationState(Base):
     )
     session_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), 
-        ForeignKey("user_sessions.id", ondelete="CASCADE"),
+        ForeignKey("whatsapp_sessions.id", ondelete="CASCADE"),
         nullable=False,
         unique=True
     )
@@ -110,7 +117,7 @@ class ConversationState(Base):
     )
     
     # Relationship back to session
-    session: Mapped["UserSession"] = relationship("UserSession", back_populates="conversation_state")
+    session: Mapped["WhatsAppSession"] = relationship("WhatsAppSession", back_populates="conversation_state")
     
     def __repr__(self) -> str:
         return f"<ConversationState(session_id={self.session_id}, client_type={self.client_type})>"
@@ -128,7 +135,7 @@ class MessageHistory(Base):
     )
     session_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), 
-        ForeignKey("user_sessions.id", ondelete="CASCADE"),
+        ForeignKey("whatsapp_sessions.id", ondelete="CASCADE"),
         nullable=False,
         index=True
     )
@@ -145,7 +152,7 @@ class MessageHistory(Base):
     )
     
     # Relationship
-    session: Mapped["UserSession"] = relationship("UserSession", back_populates="messages")
+    session: Mapped["WhatsAppSession"] = relationship("WhatsAppSession", back_populates="messages")
     
     def __repr__(self) -> str:
         return f"<MessageHistory(id={self.id}, direction={self.direction}, type={self.message_type})>"
@@ -163,7 +170,7 @@ class AnalyticsEvent(Base):
     )
     session_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), 
-        ForeignKey("user_sessions.id", ondelete="CASCADE"),
+        ForeignKey("whatsapp_sessions.id", ondelete="CASCADE"),
         nullable=False,
         index=True
     )
@@ -178,7 +185,7 @@ class AnalyticsEvent(Base):
     )
     
     # Relationship
-    session: Mapped["UserSession"] = relationship("UserSession", back_populates="analytics_events")
+    session: Mapped["WhatsAppSession"] = relationship("WhatsAppSession", back_populates="analytics_events")
     
     def __repr__(self) -> str:
         return f"<AnalyticsEvent(id={self.id}, type={self.event_type}, step={self.step_id})>"
